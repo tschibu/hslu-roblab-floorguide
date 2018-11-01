@@ -1,0 +1,17 @@
+topic: ~floor_guide()
+language: enu
+
+concept:(food) [fruits chicken beef eggs]
+
+u: (I [want "would like"] {some} _~food) Sure! You must really like $1 .
+u: (Hello) Welcome. How can I help you?
+u: (I'm looking for room number _[301 "3 0 1" 302 "3 0 2" 303 304 305 307 308 309 310 311 312]) Let me show you the way to room $1 .
+u: (I'm looking for room _[Pac-Man Tetris "World of Warcraft" Asteroids]) Let me show you the way to room $1 .
+
+u: ([e:FrontTactilTouched e:MiddleTactilTouched e:RearTactilTouched]) You touched my head!
+
+u: (Do you want to be tested) %testing Yes, please, test me now!
+u: (test test test) Yes, it works!
+    u1: ([cool awesome]) isn't it?
+
+u:(start counting) 0, 1, 2, 3, 4, 5.
