@@ -1,10 +1,14 @@
 import math
+from roblib.datastructures import Coordinate
 
 class Movement():
     def __init__(self, session):
         self.session = session
         self.motion = session.ALMotion
         self.navigation = session.ALNavigation
+
+    def move(currentPos: Coordinate, destinationPos: Coordinate): -> bool
+        return True
 
     def log(self, text, value):
         if value:
