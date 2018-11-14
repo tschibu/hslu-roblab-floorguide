@@ -18,7 +18,7 @@ class PepperConfiguration(object):
             self.Password = "i2-p2e3p"
         else:
             self.Ip = ip
-            self.port = port
+            self.Port = port
 
     @property
     def IpPort(self):

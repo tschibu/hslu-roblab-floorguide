@@ -6,3 +6,12 @@ virtualRobotConfig = PepperConfiguration("Porter")
 myRobot = Robot(virtualRobotConfig)
 
 
+# Hands
+# open
+myRobot.ALMotion.openHand("RHand")
+myRobot.ALMotion.openHand("LHand")
+
+# close
+myRobot.ALMotion.closeHand("RHand")
+myRobot.ALMotion.closeHand("LHand")
+
