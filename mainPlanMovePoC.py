@@ -1,10 +1,12 @@
+from pynaoqi_mate import Robot
+from configuration import PepperConfiguration
 from roblib.datastructures import Coordinate
 from planner import Planner
 from movement import Movement
 
+roboterName = "Amber"
 testCurrentPos = Coordinate(0, 0, 0)
 testDestinationPos = Coordinate(2, 5, 0)
-
 
 #Main entry point for the Planner & Movement Proof-of-Concept
 def _main():

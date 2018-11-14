@@ -1,16 +1,16 @@
 class MoveCommand():
-    def __init__(self, int: x, int: y, int: degrees):
+    def __init__(self, x, y, degrees):
         self.x = x
         self.y = y
         self.degrees = degrees
 
-    def getX(): -> int
+    def getX():
         return self.x
 
-    def getY(): -> int
+    def getY():
         return self.y
 
-    def getDegrees(): -> int
+    def getDegrees():
         return self.degrees
 
 Coordinate = MoveCommand

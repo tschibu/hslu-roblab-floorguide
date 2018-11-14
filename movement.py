@@ -7,7 +7,7 @@ class Movement():
         self.motion = session.ALMotion
         self.navigation = session.ALNavigation
 
-    def move(currentPos: Coordinate, destinationPos: Coordinate): -> bool
+    def move(currentPos, destinationPos):
         return True
 
     def log(self, text, value):
