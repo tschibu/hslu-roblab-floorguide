@@ -1,5 +1,5 @@
 import os
-import time
+import datetime
 import qi
 import functools
 
@@ -17,7 +17,7 @@ class Tracer():
         self.task = qi.PeriodicTask()
 
     def traceTask(self):
-        timestamp = time.time()
+        timestamp = datetime.datetime.utcnow()
         accx = self.memory.getData("Device/SubDeviceList/InertialSensorBase/AccelerometerX/Sensor/Value")
         accy = self.memory.getData("Device/SubDeviceList/InertialSensorBase/AccelerometerY/Sensor/Value")
         accz = self.memory.getData("Device/SubDeviceList/InertialSensorBase/AccelerometerZ/Sensor/Value")
