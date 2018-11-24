@@ -1,4 +1,4 @@
-var requestURL = 'https://picks.ciaran.ch/json/j.json';
+var requestURL = 'https://picks.ciaran.ch/json/position.json';
 var request = new XMLHttpRequest();
 
 request.open('GET', requestURL);

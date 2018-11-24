@@ -23,43 +23,51 @@ request.onload = function () {
 //     return pathArr;
 // }
 
-function drawMap(initMap) {
+function drawGrid(x, y) {
 
-    const x = initMap['square']['x'];
-    console.log(x);
-    const y = initMap['square']['y'];
-    console.log(y);
-    const nodes = initMap['nodes'];
-    console.log(nodes);
+    var t = '<table cellspacing="0" border="1" cellpadding="0" class="grid">';
 
-    // var floor = [1, 2, 16, 17, 31, 32, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 
-    //             58, 59, 60, 61, 69, 70, 75, 76, 84, 85, 90, 91, 99, 100, 105, 106, 114, 
-    //             115, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 
-    //             133, 134, 135, 149, 150, 164, 165, 179, 180];
+    for (var i = 0; i < y; i++) {
 
-    // var rooms = [51, 52, 58, 59, 60, 61, 121, 122, 126, 127, 133, 135];
+        t += '<tr>';
 
+        for (var j = 0; j < x; j++) {
 
-    var t = '<table cellspacing="0" border="1" cellpadding="0" class="grid"><tr>';
-
-    for (var i = 0; i <= (x * y); i++) {
-
-        t += '<td id="field-' + i + '"></td>';
-
-        if (i != (x * y)) {
-
-            t += ((i % (x - 1) === 0 && i != 0) ? '</tr><tr>' : '');
-
-        } else {
-
-            t += '</tr>';
+            t += '<td id="' + j + '-' + i +'">';
 
         }
+
+        t += '</tr>';
 
     }
 
     t += '</table>';
 
-    $("#map-canvas").html(t);
+    return t;
+}
+
+function drawNodes(nodes) {
+
+    nodes.forEach(element => {
+        
+        var id = element['x'] + '-' + element['y'];
+        var e = document.getElementById(id);
+        e.className = "floor";
+
+    });
+
+}
+
+function drawMap(initMap) {
+
+    const x = initMap['square']['x'];
+    const y = initMap['square']['y'];
+    const nodes = initMap['nodes'];
+
+    $("#map-canvas").html(drawGrid(x, y));
+
+    setTimeout(2000);
+
+    drawNodes(nodes);
 
 }
