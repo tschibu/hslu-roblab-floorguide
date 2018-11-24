@@ -4,13 +4,13 @@ class MoveCommand():
         self.y = y
         self.degrees = degrees
 
-    def getX():
+    def getX(self):
         return self.x
 
-    def getY():
+    def getY(self):
         return self.y
 
-    def getDegrees():
+    def getDegrees(self):
         return self.degrees
 
 Coordinate = MoveCommand

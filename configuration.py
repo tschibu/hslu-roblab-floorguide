@@ -1,3 +1,5 @@
+import os
+
 class PepperConfiguration(object):
     Name = None
     Ip = None
@@ -23,3 +25,10 @@ class PepperConfiguration(object):
     @property
     def IpPort(self):
         return self.Ip + ":" + str(self.Port)
+
+    def isAvailable(self):
+        response = os.system("ping -c 1 -t 2 " + self.Ip + " > /dev/null 2>&1")
+        if(response == 0):
+            return True
+        else:
+            return False
