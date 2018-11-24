@@ -8,17 +8,17 @@ class Movement():
         self.motion = session.ALMotion
         self.navigation = session.ALNavigation
 
-    def move(moveCmd):
-        return move(moveCmd.getX(), moveCmd.getY(), moveCmd.getDegrees())
+    def move(self, moveCmd):
+        return self._moveIntern(moveCmd.getX(), moveCmd.getY(), moveCmd.getDegrees())
 
-    def move(currentPos, destinationPos):
+    def moveFromTo(self, currentPos, destinationPos):
         x = destinationPos.getX() - currentPos.getX()
         y = destinationPos.getY() - currentPos.getY()
         degrees = destinationPos.getDegrees() - currentPos.getDegrees()
-        return move(x, y, degrees)
+        return self._moveIntern(x, y, degrees)
 
-    def move(x, y, degrees):
-        return log(self.motion.navigateTo(x, y), x, y, degrees)
+    def _moveIntern(self, x, y, degrees):
+        return self.log(self.navigation.navigateTo(x, y), x, y, degrees)
 
     def log(self, value, x, y, degrees):
         if value:
