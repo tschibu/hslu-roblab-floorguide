@@ -10,19 +10,6 @@ request.onload = function () {
     drawMap(initMap);
 }
 
-// function calcPath(jsonPath) {
-
-//     var pathArr = new Array(jsonPath.length);
-
-//     for (var i = 0; i < jsonPath.length; i++) {
-
-//         pathArr[i] = (jsonPath[i]['x'] + ((jsonPath[i]['y'] - 1) * 15));
-
-//     }
-
-//     return pathArr;
-// }
-
 function drawGrid(x, y) {
 
     var t = '<table cellspacing="0" border="1" cellpadding="0" class="grid">';
@@ -54,6 +41,14 @@ function drawNodes(nodes) {
         var e = document.getElementById(id);
         e.className = "floor";
 
+        var room = element['room'];
+
+        if (!jQuery.isEmptyObject(room)) {
+
+            e.textContent += room['name'].substring(0,3);
+
+        }
+
     });
 
 }
@@ -62,12 +57,13 @@ function drawMap(initMap) {
 
     const x = initMap['square']['x'];
     const y = initMap['square']['y'];
+
     const nodes = initMap['nodes'];
 
     $("#map-canvas").html(drawGrid(x, y));
 
-    setTimeout(2000);
-
     drawNodes(nodes);
+
+    window.setInterval(updateMap, 2000);
 
 }
