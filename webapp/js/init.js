@@ -23,55 +23,51 @@ request.onload = function () {
 //     return pathArr;
 // }
 
-function calcNodes(nodesObj, x) {
+function drawGrid(x, y) {
 
-    var nodesArr = new Array(nodesObj.length);
-    console.log(nodesObj);
+    var t = '<table cellspacing="0" border="1" cellpadding="0" class="grid">';
 
-    for (var i = 0; i < nodesObj.length; i++) {
+    for (var i = 0; i < y; i++) {
 
-        nodesArr[i] = (nodesObj[i]['x'] + ((nodesObj[i]['y']) * x + 1));
+        t += '<tr>';
+
+        for (var j = 0; j < x; j++) {
+
+            t += '<td id="' + j + '-' + i +'">';
+
+        }
+
+        t += '</tr>';
 
     }
 
-    return nodesArr;
+    t += '</table>';
+
+    return t;
+}
+
+function drawNodes(nodes) {
+
+    nodes.forEach(element => {
+        
+        var id = element['x'] + '-' + element['y'];
+        var e = document.getElementById(id);
+        e.className = "floor";
+
+    });
+
 }
 
 function drawMap(initMap) {
 
     const x = initMap['square']['x'];
     const y = initMap['square']['y'];
+    const nodes = initMap['nodes'];
 
-    var nodesObj = initMap['nodes'];
-    const nodes = calcNodes(nodesObj, x);
+    $("#map-canvas").html(drawGrid(x, y));
 
-    var t = '<table cellspacing="0" border="1" cellpadding="0" class="grid"><tr>';
+    setTimeout(2000);
 
-    for (var i = 1; i <= (x * y); i++) {
-
-        if (nodes.includes(i)) {
-
-            t += '<td id="field-' + i + '" class="floor">';
-
-        } else {
-
-            t += '<td id="field-' + i + '"></td>';
-
-        }
-
-        if (i != (x * y)) {
-
-            t += ((i % x === 0) ? '</tr><tr>' : '');
-
-        } else {
-
-            t += '</tr>';
-
-        }
-    }
-
-    t += '</table>';
-
-    $("#map-canvas").html(t);
+    drawNodes(nodes);
 
 }
