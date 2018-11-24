@@ -1,5 +1,6 @@
 import math
 from roblib.datastructures import Coordinate
+from logger import Logger
 
 class Movement():
     def __init__(self, session):
@@ -8,30 +9,14 @@ class Movement():
         self.navigation = session.ALNavigation
 
     def move(currentPos, destinationPos):
-        return True
+        x = destinationPos.getX() - currentPos.getX()
+        y = destinationPos.getY() - currentPos.getY()
+        degrees = destinationPos.getDegrees() - currentPos.getDegrees()
+        return log(self.motion.navigateTo(x, y), x, y, degrees)
 
-    def log(self, text, value):
+    def log(self, value, x, y, degrees):
         if value:
-            print("Successful: " + str(text))
+            Logger.info("Movement", "navigateTo", "successful move with x: " + str(x) + " y: " + str(y) + " degrees: " + str(degrees))
         else:
-            print("Failed: " + str(text))
-
-    def moveSquare(self, meters):
-        self.log("Move Straight", self.motion.moveTo(meters, 0, 0))
-        self.log("Turn Left", self.motion.moveTo(0, 0 , math.pi/2))
-        self.log("Move Straight", self.motion.moveTo(meters, 0, 0))
-        self.log("Turn Left", self.motion.moveTo(0, 0 , math.pi/2))
-        self.log("Move Straight", self.motion.moveTo(meters, 0, 0))
-        self.log("Turn Left", self.motion.moveTo(0, 0 , math.pi/2))
-        self.log("Move Straight", self.motion.moveTo(meters, 0, 0))
-        self.log("Turn Left", self.motion.moveTo(0, 0 , math.pi/2))
-
-    def moveSquare2(self, meters):
-        self.log("Move Straight", self.navigation.navigateTo(meters, 0))
-        self.log("Turn Left", self.motion.moveTo(0, 0 , math.pi))
-        self.log("Move Straight", self.navigation.navigateTo(meters, 0))
-        self.log("Turn Left", self.motion.moveTo(0, 0 , math.pi))
-        self.log("Move Straight", self.navigation.navigateTo(meters, 0))
-        self.log("Turn Left", self.motion.moveTo(0, 0 , math.pi))
-        self.log("Move Straight", self.navigation.navigateTo(meters, 0))
-        self.log("Turn Left", self.motion.moveTo(0, 0 , math.pi))
+            Logger.err("Movement", "navigateTo", "failed move with x: " + str(x) + " y: " + str(y) + " degrees: " + str(degrees))
+        return value
