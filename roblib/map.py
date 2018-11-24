@@ -2,6 +2,12 @@ from logger import Logger
 from roblib.node import Node, Room
 import json
 
+NODES = "nodes"
+ROOM = "room"
+NAME = "name"
+DEGREE = "deg"
+
+
 class Map:
     def __init__(self):
         self.size_x = 0
@@ -19,10 +25,12 @@ class Map:
             self.size_x = size["x"]
             self.size_y = size["y"]
 
-            for n in data["nodes"]:
-                if (len(n["room"]) == 2):
-                    r = Room("", n["room"]["name"], n["room"]["degree"])
-                    Logger.debug("Map.load_json","add_room", str(n["room"]["name"]) + " "+ str(n["room"]["degree"]))
+            self.alg()
+
+            for n in data[NODES]:
+                if (len(n[ROOM]) == 2):
+                    r = Room("", n[ROOM][NAME], n[ROOM][DEGREE])
+                    Logger.debug("Map.load_json", "add_room", str(n[ROOM][NAME]) + " "+ str(n[ROOM][DEGREE]))
                 else:
                     r = None;
                 n = Node(n["x"], n["y"], r)
