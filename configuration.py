@@ -1,3 +1,5 @@
+import os
+
 class PepperConfiguration(object):
     Name = None
     Ip = None
