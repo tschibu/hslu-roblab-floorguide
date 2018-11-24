@@ -18,7 +18,9 @@ class Movement():
         return self._moveIntern(x, y, degrees)
 
     def _moveIntern(self, x, y, degrees):
-        return self.log(self.navigation.navigateTo(x, y), x, y, degrees)
+        status = self.log(self.navigation.navigateTo(x, y), x, y, degrees)
+        self.motion.moveTo(0, 0 , math.radians(-degrees))
+        return status
 
     def log(self, value, x, y, degrees):
         if value:
