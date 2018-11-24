@@ -73,7 +73,6 @@ class Robot(object):
     """
     Your PyNAOQI mate class.
     """
-   
 
     def __init__(self, configuration):
         self.configuration = configuration
@@ -108,9 +107,7 @@ class Robot(object):
         self.ALLaser = ALLaser(self.session)
         self.ALLeds = ALLeds(self.session)
         self.ALLocalization = ALLocalization(self.session)
-
         self.ALMemory = ALMemory(self.session)
-
         self.ALMotion = ALMotion(self.session)
         self.ALMovementDetection = ALMovementDetection(self.session)
         self.ALNavigation = ALNavigation(self.session)

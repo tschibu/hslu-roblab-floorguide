@@ -3,6 +3,7 @@ from configuration import PepperConfiguration
 from tracer import Tracer
 from movement import Movement
 from dialog import Dialog
+from display import Tablet
 
 roboterName = "Amber"
 
@@ -11,8 +12,13 @@ def _main():
     robot = Robot(config)
     robot.ALRobotPosture.goToPosture("StandInit", 1)
 
-    dia = Dialog(robot)
-    dia.talk()
+
+
+    tablet = Tablet(robot)
+    tablet.onInput_onStart()
+
+    #dia = Dialog(robot)
+    #dia.talk()
 
     #mov = Movement(robot)
     #mov.moveSquare(1)
