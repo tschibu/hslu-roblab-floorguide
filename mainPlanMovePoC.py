@@ -11,7 +11,7 @@ from tracer import Tracer
 roboterName = "Amber"
 initPosition = "StandZero" # StandInit, StandZero, Crouch
 testCurrentPos = Coordinate(0.0, 0.0, 0)
-testDestinationPos = Coordinate(0.5, 0.0, 0)
+testDestinationPos = Coordinate(2.0, 0.0, 0)
 
 #Main entry point for the Planner & Movement Proof-of-Concept
 def _main():
@@ -29,6 +29,7 @@ def _main():
     planner = Planner()
     movement = Movement(robot)
     tracer = Tracer(robot)
+    tracer.start() # start tracing
 
     #moveCmds = planner.getMoveCommands(testCurrentPos, testDestinationPos)
 
@@ -36,6 +37,8 @@ def _main():
     #    movement.move(mcmd)
 
     movement.moveFromTo(testCurrentPos, testDestinationPos)
+
+    tracer.stop()
 
 if __name__ == "__main__":
     _main()
