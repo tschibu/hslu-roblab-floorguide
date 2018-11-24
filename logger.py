@@ -1,5 +1,4 @@
 import os
-import time
 import datetime
 
 _DEBUG = True
@@ -7,8 +6,8 @@ _FILESTREAM = open("team10_room_guide.log", "a")
 _LINEENDING = os.linesep
 
 def writeLogMsg(t, className, topic, message):
-    ts = time.time()
-    txt = t + ": " + datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S') + " " + className + "." + topic + " -> '" + message + "'"
+    ts = datetime.datetime.utcnow()
+    txt = t + ": " + str(ts) + ", " + className + "." + topic + " -> '" + message + "'"
     print(txt)
     _FILESTREAM.write(txt+_LINEENDING)
 
