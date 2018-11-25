@@ -3,14 +3,15 @@ function drawPosition(position) {
     // get rid of position classes 
     let positionElements = Array.from(document.querySelectorAll('.position'));
     positionElements.forEach(e =>{
-        e.classList.remove("position");
+        e.className = "floor";
     });
 
     // add new position class to element
     var id = position['x'] + '-' + position['y'];
-    console.log(id);
+    var deg = position['deg'];
     var e = document.getElementById(id);
     e.className += " position";
+    e.className += " deg-" + deg;
 
 }
 
@@ -26,14 +27,11 @@ function drawPath(path) {
         var id = node['x'] + '-' + node['y'];
         var e = document.getElementById(id);
         e.className += " path";
-
     });
 
 }
 
 function updateMap() {
-
-    console.log('function called.');
 
     var requestURL = 'https://picks.ciaran.ch/json/position.json';
     var request = new XMLHttpRequest();
