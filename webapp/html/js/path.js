@@ -1,6 +1,6 @@
 function drawPosition(position) {
 
-    // get rid of position classes 
+    // get rid of position classes
     let positionElements = Array.from(document.querySelectorAll('.position'));
     positionElements.forEach(e =>{
         e.className = "floor";
@@ -23,7 +23,7 @@ function drawPath(path) {
         e.classList.remove("path");
     });
 
-    path.forEach(node => {        
+    path.forEach(node => {
         var id = node['x'] + '-' + node['y'];
         var e = document.getElementById(id);
         e.className += " path";
@@ -33,7 +33,7 @@ function drawPath(path) {
 
 function updateMap() {
 
-    var requestURL = 'https://picks.ciaran.ch/json/position.json';
+    var requestURL = 'http://'+window.location.host+'/json/position.json';
     var request = new XMLHttpRequest();
 
     request.open('GET', requestURL+ ((/\?/).test(requestURL) ? "&" : "?") + (new Date()).getTime());
@@ -43,13 +43,13 @@ function updateMap() {
     request.onload = function () {
 
         var jsonObj = request.response;
-    
+
         var position = jsonObj['position'];
         var path = jsonObj['path'];
-    
+
         drawPosition(position);
         drawPath(path);
 
-    } 
+    }
 
 }

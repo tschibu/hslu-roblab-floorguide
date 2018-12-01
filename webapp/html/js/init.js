@@ -1,4 +1,4 @@
-var requestURL = 'https://picks.ciaran.ch/json/map.json';
+var requestURL = 'http://'+window.location.host+'/json/map.json';
 var request = new XMLHttpRequest();
 
 request.open('GET', requestURL);
@@ -36,7 +36,7 @@ function drawGrid(x, y) {
 function drawNodes(nodes) {
 
     nodes.forEach(element => {
-        
+
         var id = element['x'] + '-' + element['y'];
         var e = document.getElementById(id);
         e.className = "floor";
