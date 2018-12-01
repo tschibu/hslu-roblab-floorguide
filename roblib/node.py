@@ -10,6 +10,18 @@ class Node:
         self.up_node = None
         self.down_node = None
 
+    def set_right(self, node):
+        self.right_node = node
+
+    def set_left(self, node):
+        self.left_node = node
+
+    def set_up(self, node):
+        self.up_node = node
+
+    def set_down(self, node):
+        self.down_node = node
+
 class Room:
     def __init__(self, number, name, degree):
         self.number = number
