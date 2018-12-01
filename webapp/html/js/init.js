@@ -1,4 +1,4 @@
-var requestURL = 'http://'+window.location.host+'/json/map.json';
+var requestURL = '/json/map.json';
 var request = new XMLHttpRequest();
 
 request.open('GET', requestURL);

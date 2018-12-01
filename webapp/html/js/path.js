@@ -33,7 +33,7 @@ function drawPath(path) {
 
 function updateMap() {
 
-    var requestURL = 'http://'+window.location.host+'/json/position.json';
+    var requestURL = '/json/position.json';
     var request = new XMLHttpRequest();
 
     request.open('GET', requestURL+ ((/\?/).test(requestURL) ? "&" : "?") + (new Date()).getTime());
