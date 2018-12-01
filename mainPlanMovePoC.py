@@ -11,7 +11,7 @@ from tracer import Tracer
 roboterName = "Amber"
 initPosition = "StandZero" # StandInit, StandZero, Crouch
 testCurrentPos = Coordinate(0.0, 0.0, 0)
-testDestinationPos = Coordinate(2.0, 0.0, 0)
+testDestinationPos = Coordinate(0.0, 0.0, 180)
 
 #Main entry point for the Planner & Movement Proof-of-Concept
 def _main():
@@ -22,7 +22,13 @@ def _main():
         sys.exit(1)
 
     robot = Robot(config)
-    robot.ALRobotPosture.goToPosture("StandZero", 1)
+    lifeService = robot.session.service("ALAutonomousLife")
+    lifeService.setAutonomousAbilityEnabled("AutonomousBlinking", False)
+    lifeService.setAutonomousAbilityEnabled("BackgroundMovement", False)
+    lifeService.setAutonomousAbilityEnabled("BasicAwareness", False)
+    lifeService.setAutonomousAbilityEnabled("ListeningMovement", False)
+    lifeService.setAutonomousAbilityEnabled("SpeakingMovement", False)
+    robot.ALRobotPosture.goToPosture(initPosition, 1)
     time.sleep(3)
 
     #create Components

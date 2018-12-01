@@ -7,6 +7,12 @@ class Movement():
         self.session = session
         self.motion = session.ALMotion
         self.navigation = session.ALNavigation
+        self.memory = session.ALMemory
+        self.subscriberOnMoveFailed = self.memory.subscriber("MoveFailed")
+        self.subscriberOnMoveFailed.signal.connect(self.onMoveFailed)
+
+    def onMoveFailed(eventName, value, subscriberIdentifier):
+        Logger.err("Movement", "onMoveFailed", "eventName: " + eventName + ", value: " + value + ", subscriberIdentifier: " + subscriberIdentifier)
 
     def move(self, moveCmd):
         return self._moveIntern(moveCmd.getX(), moveCmd.getY(), moveCmd.getDegrees())

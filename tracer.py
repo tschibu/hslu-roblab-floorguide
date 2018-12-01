@@ -24,11 +24,11 @@ class Tracer():
         gyrox = self.memory.getData("Device/SubDeviceList/InertialSensorBase/GyroscopeX/Sensor/Value")
         gyroy = self.memory.getData("Device/SubDeviceList/InertialSensorBase/GyroscopeY/Sensor/Value")
         gyroz = self.memory.getData("Device/SubDeviceList/InertialSensorBase/GyroscopeZ/Sensor/Value")
-        wflpos = 0 #self.memory.getData("Device/SubDeviceList/InertialSensorBase/WheelFL/Position/Sensor/Value")
-        wfrpos = 0 #self.memory.getData("Device/SubDeviceList/InertialSensorBase/WheelFR/Position/Sensor/Value")
-        wbpos = 0 #self.memory.getData("Device/SubDeviceList/InertialSensorBase/WheelB/Position/Sensor/Value")
+        wflvel = self.memory.getData("Device/SubDeviceList/WheelFL/Speed/Sensor/Value")
+        wfrvel = self.memory.getData("Device/SubDeviceList/WheelFR/Speed/Sensor/Value")
+        wbvel = self.memory.getData("Device/SubDeviceList/WheelB/Speed/Sensor/Value")
 
-        self._write(timestamp, accx, accy, accz, gyrox, gyroy, gyroz, wflpos, wfrpos, wbpos)
+        self._write(timestamp, accx, accy, accz, gyrox, gyroy, gyroz, wflvel, wfrvel, wbvel)
 
     def start(self):
         self.task.setCallback(self.traceTask)
@@ -39,8 +39,8 @@ class Tracer():
     def stop(self):
         self.task.stop()
 
-    def _write(self, timestamp, accx, accy, accz, gyrox, gyroy, gyroz, wflpos, wfrpos, wbpos):
+    def _write(self, timestamp, accx, accy, accz, gyrox, gyroy, gyroz, wflvel, wfrvel, wbvel):
         txt = str(timestamp) + _SEP + str(accx) + _SEP + str(accy) + _SEP + str(accz)
         txt = txt + _SEP + str(gyrox) + _SEP + str(gyroy) + _SEP + str(gyroz)
-        txt = txt + _SEP + str(wflpos) + _SEP + str(wfrpos) + _SEP + str(wbpos)
+        txt = txt + _SEP + str(wflvel) + _SEP + str(wfrvel) + _SEP + str(wbvel)
         _FILESTREAM.write(txt+os.linesep)

@@ -8,7 +8,7 @@ import qi
 
 class ALMemory(object):
     def __init__(self, session):
-        self.proxy = None 
+        self.proxy = None
         self.session = session
 
     def force_connect(self):
