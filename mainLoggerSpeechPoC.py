@@ -35,20 +35,9 @@ def _main():
     #init Speech
     Speech(robot)
 
-    #create Components
-    planner = Planner()
-    movement = Movement(robot)
-    tracer = Tracer(robot)
-    tracer.start() # start tracing
-
-    #moveCmds = planner.getMoveCommands(testCurrentPos, testDestinationPos)
-
-    #for mcmd in moveCmds:
-    #    movement.move(mcmd)
-
-    movement.moveFromTo(testCurrentPos, testDestinationPos)
-
-    tracer.stop()
+    Logger.info("Main", "testError", "we got an info message")
+    Logger.err("Main", "testError", "we got an error message")
+    Logger.debug("Main", "testError", "we got an debug message")
 
 if __name__ == "__main__":
     _main()
