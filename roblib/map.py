@@ -18,7 +18,7 @@ class Map:
         self.nodes = {}
 
     def load_json(self):
-        with open("webapp/json/map.json") as json_file:
+        with open("webapp/html/json/map.json") as json_file:
             data = json.load(json_file)
 
             size = data[SQUARE]
