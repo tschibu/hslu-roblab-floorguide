@@ -17,7 +17,7 @@ def _main():
 
     robot = Robot(config)
     tabletService = robot.session.service("ALTabletService")
-    tabletService.loadApplication("floorguide_web")
+    tabletService.loadApplication("roomselection_web")
     tabletService.showWebview()
 
 if __name__ == "__main__":

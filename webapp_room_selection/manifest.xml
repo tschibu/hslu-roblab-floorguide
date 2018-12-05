@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<package version="0.0.1" uuid="floorguide_web">
+<package version="0.0.1" uuid="roomselection_web">
  <names>
-  <name lang="en_US">FloorGuide_Web</name>
+  <name lang="en_US">RoomSelection_Web</name>
  </names>
  <descriptions>
-  <description lang="en_US">FloorGuide WebApp</description>
+  <description lang="en_US">Room Selection WebApp</description>
  </descriptions>
  <supportedLanguages>
   <language>en_US</language>
@@ -13,7 +13,7 @@
   <language>en_US</language>
  </descriptionLanguages>
  <contents>
-  <behaviorContent path="floorguide_behavior">
+  <behaviorContent path="room_selection_behavior">
    <userRequestable/>
    <nature>interactive</nature>
    <permissions/>

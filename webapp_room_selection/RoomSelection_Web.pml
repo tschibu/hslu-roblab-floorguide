@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Package name="FloorGuide_Web" format_version="4">
+<Package name="RoomSelection_Web" format_version="4">
     <Manifest src="manifest.xml" />
     <BehaviorDescriptions>
-        <BehaviorDescription name="floorguide_behavior" src="floorguide_behavior" xar="behavior.xar" />
+        <BehaviorDescription name="room_selection_behavior" src="room_selection_behavior" xar="behavior.xar" />
     </BehaviorDescriptions>
     <Dialogs />
     <Resources>
