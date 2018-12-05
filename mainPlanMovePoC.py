@@ -12,7 +12,7 @@ from tracer import Tracer
 roboterName = "Amber"
 initPosition = "StandZero" # StandInit, StandZero, Crouch
 testCurrentPos = Coordinate(0.0, 0.0, 0)
-testDestinationPos = Coordinate(0.0, 0.0, 180)
+testDestinationPos = Coordinate(2.0, 0.0, 180)
 
 #Main entry point for the Planner & Movement Proof-of-Concept
 def _main():
