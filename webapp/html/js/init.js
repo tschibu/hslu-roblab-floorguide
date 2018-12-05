@@ -35,8 +35,8 @@ function drawGrid(x, y) {
 
 function drawNodes(nodes) {
 
-    nodes.forEach(element => {
-
+    nodes.forEach(function (element) {
+        
         var id = element['x'] + '-' + element['y'];
         var e = document.getElementById(id);
         e.className = "floor";
@@ -55,15 +55,15 @@ function drawNodes(nodes) {
 
 function drawMap(initMap) {
 
-    const x = initMap['square']['x'];
-    const y = initMap['square']['y'];
+    var x = initMap['square']['x'];
+    var y = initMap['square']['y'];
 
-    const nodes = initMap['nodes'];
+    var nodes = initMap['nodes'];
 
     $("#map-canvas").html(drawGrid(x, y));
 
     drawNodes(nodes);
-
-    window.setInterval(updateMap, 2000);
+	
+	window.setInterval(updateMap, 2000);
 
 }

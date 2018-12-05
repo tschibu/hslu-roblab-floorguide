@@ -1,8 +1,8 @@
 function drawPosition(position) {
 
     // get rid of position classes
-    let positionElements = Array.from(document.querySelectorAll('.position'));
-    positionElements.forEach(e =>{
+    var positionElements = Array.from(document.querySelectorAll('.position'));
+    positionElements.forEach(function (e) {
         e.className = "floor";
     });
 
@@ -18,12 +18,12 @@ function drawPosition(position) {
 function drawPath(path) {
 
     // get rid of path classes
-    let pathElements = Array.from(document.querySelectorAll('.path'));
-    pathElements.forEach(e => {
+    var pathElements = Array.from(document.querySelectorAll('.path'));
+    pathElements.forEach(function (e) {
         e.classList.remove("path");
     });
 
-    path.forEach(node => {
+    path.forEach(function (node) {        
         var id = node['x'] + '-' + node['y'];
         var e = document.getElementById(id);
         e.className += " path";
@@ -43,13 +43,13 @@ function updateMap() {
     request.onload = function () {
 
         var jsonObj = request.response;
-
+    
         var position = jsonObj['position'];
         var path = jsonObj['path'];
-
+    
         drawPosition(position);
         drawPath(path);
 
-    }
+    } 
 
 }
