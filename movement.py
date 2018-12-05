@@ -24,8 +24,11 @@ class Movement():
         return self._moveIntern(x, y, degrees)
 
     def _moveIntern(self, x, y, degrees):
-        status = self.log(self.navigation.navigateTo(x, y), x, y, degrees)
-        self.motion.moveTo(0, 0 , math.radians(-degrees))
+        status = True
+        if x != 0 and y != 0:
+            status = self.log(self.navigation.navigateTo(x, y), x, y, degrees)
+        if degrees != 0:
+            self.motion.moveTo(0, 0 , math.radians(-degrees))
         return status
 
     def log(self, value, x, y, degrees):
