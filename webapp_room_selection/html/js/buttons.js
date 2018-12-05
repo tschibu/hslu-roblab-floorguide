@@ -13,7 +13,7 @@ request.onload = function () {
 function isEmpty(obj) {
     for(var prop in obj) {
         if(obj.hasOwnProperty(prop))
-            return false;
+            { return false; }
     }
 
     return JSON.stringify(obj) === JSON.stringify({});
@@ -23,10 +23,7 @@ function drawButtons(data) {
     var count = 0;
     var maxPerRow = 4;
 
-    roomNodes = data.nodes.filter(n =>
-        !isEmpty(n.room)
-    );
-    console.log(roomNodes);
+    roomNodes = data.nodes.filter(function (n) { return !isEmpty(n.room); });
 
     selection = document.getElementById("selection");
     var table = document.createElement('table');
@@ -42,10 +39,37 @@ function drawButtons(data) {
         var el = document.createElement('td');
         var button = document.createElement('button');
         button.innerHTML = roomNodes[i].room.name;
-        button.id = roomNodes[i].room.name;
-        el.append(button);
+        button.setAttribute("id", roomNodes[i].room.name);
+        button.onclick = onButtonClick;
+        el.appendChild(button);
         row.appendChild(el);
     }
     table.appendChild(row);
     selection.appendChild(table);
+}
+
+function onButtonClick(event) {
+    alert("you pressed on: " + event.path[0].id);
+
+    QiSession(function (session) {
+        alert("QiSession connected!");
+        triggerEvent();
+    }, function () {
+        alert("QiSession disconnected!");
+    });
+}
+
+function triggerEvent() {
+    QiSession.connect(function (session) {
+        session.service("ALMemory").then(function (ALMemory) {
+            alert("raise FGButtonClicked");
+            ALMemory.raiseEvent("FGButtonClicked", event.path[0].id);
+        }, function (error) {
+            console.log("An error occurred:", error);
+        });
+    }, onError);
+}
+
+function onError(err) {
+    alert(err);
 }

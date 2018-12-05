@@ -26,3 +26,10 @@ xxxx
 
 ### Pepper Behaviour
 xxxxx
+
+### Important Infos
+#### JavaScript libs on target
+cd /opt/aldebaran/var/www/libs/
+
+#### Webapp location on Robot
+cd ~/.local/share/PackageManager/apps/roomselection_web/html

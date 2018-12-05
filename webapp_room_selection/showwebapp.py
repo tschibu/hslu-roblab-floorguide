@@ -17,6 +17,7 @@ def _main():
 
     robot = Robot(config)
     tabletService = robot.session.service("ALTabletService")
+    #tabletService.loadUrl("http://192.168.1.101:1337")
     tabletService.loadApplication("roomselection_web")
     tabletService.showWebview()
 
