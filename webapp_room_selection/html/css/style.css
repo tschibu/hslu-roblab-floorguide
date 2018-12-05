@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.title {
+    text-align: center;
+}
+
+.selection {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.selection button {
+    position: relative;
+    width: 200px;
+    height: 150px;
+}

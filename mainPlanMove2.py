@@ -1,18 +1,18 @@
 import sys
 import time
 from logger import Logger
-from speech import Speech
 from pynaoqi_mate import Robot
 from configuration import PepperConfiguration
 from roblib.datastructures import Coordinate
 from planner import Planner
 from movement import Movement
+from roblib.map import Map
 from tracer import Tracer
 
 roboterName = "Amber"
 initPosition = "StandZero" # StandInit, StandZero, Crouch
-testCurrentPos = Coordinate(0.0, 0.0, 0)
-testDestinationPos = Coordinate(0.0, 0.0, 180)
+current_pos = Coordinate(27, 19, 270)
+destination_pos = Coordinate(33, 1, 90)
 
 #Main entry point for the Planner & Movement Proof-of-Concept
 def _main():
@@ -23,32 +23,22 @@ def _main():
         sys.exit(1)
 
     robot = Robot(config)
-    lifeService = robot.session.service("ALAutonomousLife")
-    lifeService.setAutonomousAbilityEnabled("AutonomousBlinking", False)
-    lifeService.setAutonomousAbilityEnabled("BackgroundMovement", False)
-    lifeService.setAutonomousAbilityEnabled("BasicAwareness", False)
-    lifeService.setAutonomousAbilityEnabled("ListeningMovement", False)
-    lifeService.setAutonomousAbilityEnabled("SpeakingMovement", False)
     robot.ALRobotPosture.goToPosture(initPosition, 1)
     time.sleep(3)
-
-    #init Speech
-    Speech(robot)
 
     #create Components
     planner = Planner()
     movement = Movement(robot)
-    tracer = Tracer(robot)
-    tracer.start() # start tracing
+    map = Map()
+    map.load_json()
 
-    #moveCmds = planner.getMoveCommands(testCurrentPos, testDestinationPos)
+    moveCmds = planner.getMoveCommands(map, current_pos, destination_pos)
 
-    #for mcmd in moveCmds:
-    #    movement.move(mcmd)
+    for mcmd in moveCmds:
+        print("INFO: move!")
+        #movement.move(mcmd)
 
-    movement.moveFromTo(testCurrentPos, testDestinationPos)
-
-    tracer.stop()
+    #movement.moveFromTo(current_pos, destination_pos)
 
 if __name__ == "__main__":
     _main()
