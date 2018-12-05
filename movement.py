@@ -2,6 +2,8 @@ import math
 from roblib.datastructures import Coordinate
 from logger import Logger
 
+FACTOR = 0.6
+
 class Movement():
     def __init__(self, session):
         self.session = session
@@ -25,8 +27,8 @@ class Movement():
 
     def _moveIntern(self, x, y, degrees):
         status = True
-        if x != 0 and y != 0:
-            status = self.log(self.navigation.navigateTo(x, y), x, y, degrees)
+        if x != 0 or y != 0:
+            status = self.log(self.navigation.navigateTo(x*FACTOR, y*FACTOR), x*FACTOR, y*FACTOR, degrees)
         if degrees != 0:
             self.motion.moveTo(0, 0 , math.radians(-degrees))
         return status

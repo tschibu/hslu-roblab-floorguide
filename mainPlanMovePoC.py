@@ -9,10 +9,10 @@ from planner import Planner
 from movement import Movement
 from tracer import Tracer
 
-roboterName = "Amber"
+roboterName = "Porter"
 initPosition = "StandZero" # StandInit, StandZero, Crouch
-testCurrentPos = Coordinate(0.0, 0.0, 0)
-testDestinationPos = Coordinate(2.0, 0.0, 180)
+testCurrentPos = Coordinate(0, 6, 180)
+testDestinationPos = Coordinate(0, 18, 180)
 
 #Main entry point for the Planner & Movement Proof-of-Concept
 def _main():
@@ -41,12 +41,12 @@ def _main():
     tracer = Tracer(robot)
     tracer.start() # start tracing
 
-    #moveCmds = planner.getMoveCommands(testCurrentPos, testDestinationPos)
+    moveCmds = planner.getMoveCommands(testCurrentPos, testDestinationPos)
 
-    #for mcmd in moveCmds:
-    #    movement.move(mcmd)
+    for mcmd in moveCmds:
+        movement.move(mcmd)
 
-    movement.moveFromTo(testCurrentPos, testDestinationPos)
+    #movement.moveFromTo(testCurrentPos, testDestinationPos)
 
     tracer.stop()
 
