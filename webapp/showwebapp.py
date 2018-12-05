@@ -5,7 +5,6 @@ from logger import Logger
 from pynaoqi_mate import Robot
 from configuration import PepperConfiguration
 
-
 roboterName = "Porter"
 initPosition = "StandZero"
 
