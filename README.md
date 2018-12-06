@@ -33,3 +33,6 @@ cd /opt/aldebaran/var/www/libs/
 
 #### Webapp location on Robot
 cd ~/.local/share/PackageManager/apps/roomselection_web/html
+
+#### Markers
+http://doc.aldebaran.com/2-5/naoqi/vision/allandmarkdetection.html#allandmarkdetection
