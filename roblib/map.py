@@ -1,5 +1,5 @@
 from logger import Logger
-from roblib.node import Node, Room
+from roblib.node import Node, Room, Naomark
 import json
 
 NODES = "nodes"
@@ -10,6 +10,8 @@ SQUARE = "square"
 X = "x"
 Y = "y"
 PASSABLE = "passable"
+NAOMARK = "naomark"
+ID = "id"
 
 class Map:
     """
@@ -40,7 +42,11 @@ class Map:
                     passable = n[PASSABLE]
                 else:
                     passable = None;
-                node = Node(n["x"], n["y"], passable, r)
+                if NAOMARK in n:
+                    naomark = Naomark(n[NAOMARK][ID], n[NAOMARK][DEGREE])
+                else:
+                    naomark = None
+                node = Node(n["x"], n["y"], passable, r, naomark)
                 self.nodes[str(n["x"]) + ":" + str(n["y"])] = node
 
             Logger.info("map.py", "load_json", "successfully load map from json file.")
