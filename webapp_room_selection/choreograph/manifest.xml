@@ -1,7 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<package uuid="room_selection" version="0.0.1">
+<package uuid="FloorGuide_RoomSelection" version="0.0.1">
  <names>
+<<<<<<< HEAD
   <name lang="en_US">Room Selection FloorGuide</name>
+=======
+  <name lang="en_US">FloorGuide_RoomSelection</name>
+>>>>>>> changed manifest room selection
  </names>
  <descriptions>
   <description lang="en_US">Select Room for FloorGuide</description>
