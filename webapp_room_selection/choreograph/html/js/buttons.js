@@ -89,7 +89,6 @@ function triggerEvent(roomNumber) {
     say("Alright! I bring you to room " + roomNumber);
     session.service('ALMemory').then(function (m) {
         m.raiseEvent("FGButtonClicked", roomNumber);
-        alert("Event Raised!")
     }, function (error) {
         alert(error);
     });

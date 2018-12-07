@@ -45,33 +45,33 @@ body, html {
 .grid td.deg-90,
 .grid td.deg-180,
 .grid td.deg-270 {
-    width: 0; 
+    width: 0;
     height: 0;
 }
 
-.grid td.deg-0 {
-     
+.grid td.deg-180 {
+
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 10px solid #FFF;
 }
 
-.grid td.deg-90 {
+.grid td.deg-270 {
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     border-left: 10px solid #FFF;
 }
 
-.grid td.deg-180 {
+.grid td.deg-0 {
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-top: 10px solid #FFF;
 }
 
-.grid td.deg-270 {
+.grid td.deg-90 {
     border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent; 
-    border-right: 10px solid #FFF; 
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #FFF;
 }
 
 @-webkit-keyframes blinking-position {
