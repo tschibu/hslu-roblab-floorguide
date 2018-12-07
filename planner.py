@@ -62,9 +62,13 @@ class Planner():
                 moveList.append(MoveCommand(0, 0, turn))
             current_direction = new_direction
 
+            node = map.nodes['%d:%d' % (waypoint[0], waypoint[1])]
+            naoMarkDegree = None
+            if node.get_naomark() != None:
+                naoMarkDegree = node.get_naomark().get_degree()
             # drive command
             distance = abs(direction[0] + direction[1])
-            moveList.append(MoveCommand(distance, 0, 0))
+            moveList.append(MoveCommand(distance, 0, 0, naoMarkDegree))
             prev_waypoint = waypoint
 
         turn = destinationPos.getDegrees() - current_direction
