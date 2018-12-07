@@ -25,6 +25,14 @@ def _main():
         sys.exit(1)
 
     robot = Robot(config)
+
+    lifeService = robot.session.service("ALAutonomousLife")
+    lifeService.setAutonomousAbilityEnabled("AutonomousBlinking", False)
+    lifeService.setAutonomousAbilityEnabled("BackgroundMovement", False)
+    lifeService.setAutonomousAbilityEnabled("BasicAwareness", False)
+    lifeService.setAutonomousAbilityEnabled("ListeningMovement", False)
+    lifeService.setAutonomousAbilityEnabled("SpeakingMovement", False)
+
     robot.ALRobotPosture.goToPosture(initPosition, 1)
     time.sleep(3)
 
@@ -39,9 +47,9 @@ def _main():
     Logger.info("mainPlanMove2.py", "_main", "I have %d movements to do." % len(moveCmds))
 
     for cmd in moveCmds:
-        Logger.info("mainPlanMove2.py", "_main", "Execute move command with " + cmd.getText())
+        Logger.info("mainPlanMove2.py", "_main", "Execute move command with " + cmd.getText() + " units ")
         print("MoveCommand({}, {}, {})".format(cmd.getX(), cmd.getY(), cmd.getDegrees()))
-        if cmd.isCalibrationCmd():
+        if cmd.get_isCalibrationCmd() == True:
             movement.move(cmd)
             possynchronizer.calibratePosition(cmd.getNaoMarkId())
         else:

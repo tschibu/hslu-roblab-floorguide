@@ -18,7 +18,7 @@ class MoveCommand():
     def getText(self):
         return str(self.x)
 
-    def isCalibrationCmd(self):
+    def get_isCalibrationCmd(self):
         return self.isCalibrationCmd
 
     def getNaoMarkId(self):
