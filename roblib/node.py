@@ -30,6 +30,9 @@ class Node:
     def set_naomark(self, naomark):
         self.naomark = naomark
 
+    def get_naomark(self):
+        return self.naomark
+
     def is_passable(self):
         if (self.passable == 1):
             return True
@@ -47,3 +50,6 @@ class Naomark:
     def __init__(self, id, degree):
         self.id = id
         self.degree = degree
+
+    def get_degree(self):
+        return self.degree
