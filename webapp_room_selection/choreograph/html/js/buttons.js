@@ -59,18 +59,42 @@ function drawButtons(data) {
 }
 
 function onButtonClick(event) {
-    alert("you pressed on: " + event.path[0].id);
+    var room = event.path[0].id;
+    var txt = "Should I bring you to room " + room + "?";
+    buttonDisabled(true);
+    say(txt);
+    //need to wait until say is done...
+    setTimeout(function () { confirmRoom(room, txt); }, 2000);
+}
 
-    triggerEvent(event.path[0].id);
+function confirmRoom(room, txt) {
+    var r = confirm(txt);
+    if (r == true) {
+        triggerEvent(room);
+    } else {
+        say("Please select another room")
+        buttonDisabled(false);
+    }
+}
+
+function say(text) {
+    session.service('ALTextToSpeech').then(function (tts) {
+        tts.say(text);
+    }, function (error) {
+        alert(error);
+    });
 }
 
 function triggerEvent(roomNumber) {
-    session.service('ALTextToSpeech').then(function (tts) {
-        var txt = 'Hey Roblab Looser! I bring you to Room ' + roomNumber;
-        alert(txt);
-        tts.say(txt);
-        //tts.say(txt);
+    say("Alright! I bring you to room " + roomNumber);
+    session.service('ALMemory').then(function (m) {
+        m.raiseEvent("FGButtonClicked", roomNumber);
+        alert("Event Raised!")
     }, function (error) {
         alert(error);
-    })
+    });
+}
+
+function buttonDisabled(state) {
+    $('button').prop('disabled', state);
 }
