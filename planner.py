@@ -2,7 +2,6 @@ from astar.astar import Astar
 from roblib.map import Map
 import numpy as np
 from roblib.datastructures import MoveCommand
-from roblib.datastructures import Coordinate
 
 class Planner():
     def __init__(self):
@@ -86,3 +85,10 @@ class Planner():
         if turn < -180:
             turn += 360
         return turn
+
+    def get_coor_by_room_name(self, room_name):
+        for n in self.map.nodes.itervalues():
+            if n.get_room() != None:
+                if room_name in n.get_room().get_name():
+                    return n.get_coordinate()
+        return None
