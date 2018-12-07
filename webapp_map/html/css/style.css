@@ -1,0 +1,97 @@
+body, html {
+    height:100%;
+    margin:0
+}
+
+#map-canvas {
+    background-color: #000;
+    width:100%;
+    height:100%;
+}
+
+.grid {
+    width:100%;
+    height:100%;
+}
+
+.grid td {
+    box-sizing: border-box;
+    border: 1px solid #000;
+    font-size: 12px;
+    padding:0;
+    margin:0;
+    text-align: center;
+    height: 4%;
+    width: 1.5%;
+}
+
+.grid td.floor {
+    background-color:  #EEE;
+}
+
+.grid td.path {
+    background-color:  #00FF00;
+}
+
+.grid td.position {
+    background-color:  #FF0000;
+    color: #FFF;
+    -webkit-animation: blinking-position 1s infinite;
+    -moz-animation:    blinking-position 1s infinite;
+    animation:         blinking-position 1s infinite;
+}
+
+.grid td.deg-0,
+.grid td.deg-90,
+.grid td.deg-180,
+.grid td.deg-270 {
+    width: 0; 
+    height: 0;
+}
+
+.grid td.deg-0 {
+     
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #FFF;
+}
+
+.grid td.deg-90 {
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #FFF;
+}
+
+.grid td.deg-180 {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #FFF;
+}
+
+.grid td.deg-270 {
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent; 
+    border-right: 10px solid #FFF; 
+}
+
+@-webkit-keyframes blinking-position {
+    0%   { background-color: #EEE; }
+    49% { background-color: #EEE; }
+    50% { background-color: #EEE; }
+    99% { background-color: #EEE; }
+    100% { background-color: #ff0000; }
+}
+@-moz-keyframes blinking-position {
+    0%   { background-color: #ff0000; }
+    49% { background-color: #ff0000; }
+    50% { background-color: #EEE; }
+    99% { background-color: #EEE; }
+    100% { background-color: #ff0000; }
+}
+@keyframes blinking-position {
+    0%   { background-color: #ff0000; }
+    49% { background-color: #ff0000; }
+    50% { background-color: #EEE; }
+    99% { background-color: #EEE; }
+    100% { background-color: #ff0000; }
+}
