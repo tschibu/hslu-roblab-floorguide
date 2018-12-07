@@ -1,4 +1,4 @@
-var requestURL = '/json/map.json';
+var requestURL = 'json/map.json';
 var request = new XMLHttpRequest();
 
 request.open('GET', requestURL);
@@ -36,7 +36,7 @@ function drawGrid(x, y) {
 function drawNodes(nodes) {
 
     nodes.forEach(function (element) {
-        
+
         var id = element['x'] + '-' + element['y'];
         var e = document.getElementById(id);
         e.className = "floor";
@@ -63,7 +63,7 @@ function drawMap(initMap) {
     $("#map-canvas").html(drawGrid(x, y));
 
     drawNodes(nodes);
-	
+
 	window.setInterval(updateMap, 2000);
 
 }

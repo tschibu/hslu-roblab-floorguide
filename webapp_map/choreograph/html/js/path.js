@@ -23,7 +23,7 @@ function drawPath(path) {
         e.classList.remove("path");
     });
 
-    path.forEach(function (node) {        
+    path.forEach(function (node) {
         var id = node['x'] + '-' + node['y'];
         var e = document.getElementById(id);
         e.className += " path";
@@ -33,7 +33,7 @@ function drawPath(path) {
 
 function updateMap() {
 
-    var requestURL = '/json/position.json';
+    var requestURL = 'json/position.json';
     var request = new XMLHttpRequest();
 
     request.open('GET', requestURL+ ((/\?/).test(requestURL) ? "&" : "?") + (new Date()).getTime());
@@ -43,13 +43,13 @@ function updateMap() {
     request.onload = function () {
 
         var jsonObj = request.response;
-    
+
         var position = jsonObj['position'];
         var path = jsonObj['path'];
-    
+
         drawPosition(position);
         drawPath(path);
 
-    } 
+    }
 
 }
