@@ -4,6 +4,7 @@ from logger import Logger
 from speech import Speech
 from pynaoqi_mate import Robot
 from configuration import PepperConfiguration
+from tabletHandler import TabletHandler
 
 roboterName = "Amber"
 initPosition = "StandZero" # StandInit, StandZero, Crouch
@@ -17,7 +18,12 @@ def _main():
         sys.exit(1)
 
     robot = Robot(config)
+    TabletHandler(robot)
 
+    #start RoomSelection Webapp
+    TabletHandler.startApp(TabletHandler.getRoomSelectionApp())
+
+    #register for events of RoomSelection Webapp
     sub = robot.ALMemory.subscriber("FGButtonClicked")
     sub.signal.connect(buttonClicked)
 
@@ -26,6 +32,7 @@ def _main():
 
 def buttonClicked(value):
     print("ButtonClicked: " + value)
+    TabletHandler.startApp(TabletHandler.getMapApp())
 
 if __name__ == "__main__":
     _main()
