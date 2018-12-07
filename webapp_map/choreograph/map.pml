@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Package name="FloorGuide_Web" format_version="4">
+<Package name="FloorGuide_Map" format_version="4">
     <Manifest src="manifest.xml" />
     <BehaviorDescriptions>
-        <BehaviorDescription name="floorguide_behavior" src="floorguide_behavior" xar="behavior.xar" />
+        <BehaviorDescription name="main" src="main" xar="behavior.xar" />
     </BehaviorDescriptions>
     <Dialogs />
     <Resources>
@@ -13,11 +13,6 @@
         <File name="path" src="html/js/path.js" />
         <File name="index" src="html/index.html" />
         <File name="style" src="html/css/style.css" />
-        <File name="ftp-sync" src=".vscode/ftp-sync.json" />
-        <File name="index_dummy" src="html/index_dummy.html" />
-        <File name="localwebserver" src="html/localwebserver.py" />
-        <File name="showwebapp" src="showwebapp.py" />
-        <File name="team10_room_guide" src="team10_room_guide.log" />
         <File name="polyfill" src="html/js/polyfill.js" />
     </Resources>
     <Topics />
