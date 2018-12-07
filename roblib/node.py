@@ -1,7 +1,7 @@
 from logger import Logger
 
 class Node:
-    def __init__(self, x, y, passable, Room):
+    def __init__(self, x, y, passable, Room, naomark):
         self.x = x
         self.y = y
         self.Room = Room
@@ -10,6 +10,7 @@ class Node:
         self.up_node = None
         self.down_node = None
         self.passable = passable
+        self.naomark = naomark
 
     def set_right(self, node):
         self.right_node = node
@@ -26,14 +27,29 @@ class Node:
     def set_passable(self, passable):
         self.passable = passable
 
+    def set_naomark(self, naomark):
+        self.naomark = naomark
+
+    def get_naomark(self):
+        return self.naomark
+
     def is_passable(self):
         if (self.passable == 1):
             return True
         else:
             return False
 
+
 class Room:
     def __init__(self, number, name, degree):
         self.number = number
         self.name = name
         self.degree = degree
+
+class Naomark:
+    def __init__(self, id, degree):
+        self.id = id
+        self.degree = degree
+
+    def get_degree(self):
+        return self.degree

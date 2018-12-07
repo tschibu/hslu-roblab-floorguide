@@ -28,12 +28,12 @@ class LandMarkDetectionExample():
         self.tts.say("Starting Landmark Detection")
         memValue = "LandmarkDetected"
         self.landMarkDetection.subscribe("Test_Landmark", 500, 0.0)
-        for i in range(0, 20):
-            time.sleep(0.5)
-            val = (self.memory).getData(memValue)
-            print ""
-            print "\*****"
-            print ""
+        #for i in range(0, 20):
+        time.sleep(1.0)
+        val = (self.memory).getData(memValue)
+        #    print ""
+        #    print "\*****"
+        #    print ""
 
         # Check whether we got a valid output: a list with two fields.
         if (val and isinstance(val, list) and len(val) >= 2):
