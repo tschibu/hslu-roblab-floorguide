@@ -25,6 +25,9 @@ class Movement():
         degrees = destinationPos.getDegrees() - currentPos.getDegrees()
         return self._moveIntern(x, y, degrees)
 
+    def moveCalibrate(self, x, y):
+        self.motion.moveTo(x, y, 0)
+
     def _moveIntern(self, x, y, degrees):
         status = True
         if x != 0 or y != 0:
