@@ -10,7 +10,8 @@ class Planner():
         map.load_json()
         self.pepper_matrix = np.ones((map.map_size_x, map.map_size_y), dtype=int)
         for n in map.nodes.itervalues():
-            self.pepper_matrix[n.x][n.y] = 0
+            if (n.is_passable()):
+                self.pepper_matrix[n.x][n.y] = 0
 
     def getMoveCommands(self, current_pos, destination_pos):
         a = Astar()
@@ -64,13 +65,10 @@ class Planner():
             # drive command
             distance = abs(direction[0] + direction[1])
             moveList.append(MoveCommand(distance, 0, 0))
-            print(direction)
             prev_waypoint = waypoint
 
         turn = destinationPos.getDegrees() - current_direction
         moveList.append(MoveCommand(0, 0, turn))
-        for move in moveList:
-            print("MoveCommand({}, {}, {})".format(move.getX(), move.getY(), move.getDegrees()))
         return moveList
 
     def _getTurnDegrees(self, currentDirection, newDirection):

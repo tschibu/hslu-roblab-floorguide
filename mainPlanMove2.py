@@ -6,17 +6,17 @@ from configuration import PepperConfiguration
 from roblib.datastructures import Coordinate
 from planner import Planner
 from movement import Movement
-from roblib.map import Map
+from speech import Speech
 from tracer import Tracer
 
 roboterName = "Amber"
 initPosition = "StandZero" # StandInit, StandZero, Crouch
-current_pos = Coordinate(27, 19, 270)
-destination_pos = Coordinate(33, 1, 90)
+current_pos = Coordinate(8, 2, 270)
+destination_pos = Coordinate(49, 19, 90)
 
 #Main entry point for the Planner & Movement Proof-of-Concept
 def _main():
-    #init Robot
+    # init Robot
     config = PepperConfiguration(roboterName)
     if(not config.isAvailable()):
         Logger.err("Main", "checkAvailability", "name: " + config.Name + ", ip: " + config.Ip + " not reachable!")
@@ -26,17 +26,20 @@ def _main():
     robot.ALRobotPosture.goToPosture(initPosition, 1)
     time.sleep(3)
 
-    #create Components
+    # create Components
+    Speech(robot)
     planner = Planner()
     movement = Movement(robot)
-    map = Map()
-    map.load_json()
+    moveCmds = planner.getMoveCommands(current_pos, destination_pos)
 
-    moveCmds = planner.getMoveCommands(map, current_pos, destination_pos)
+    # info to the audience
+    Logger.info("mainPlanMove2.py", "_main", "I have %d movements to do." % len(moveCmds))
 
-    for mcmd in moveCmds:
-        print("INFO: move!")
-        #movement.move(mcmd)
+    for move in moveCmds:
+        Logger.info("mainPlanMove2.py", "_main", "Execute move command with " + move.getText())
+        print("MoveCommand({}, {}, {})".format(move.getX(), move.getY(), move.getDegrees()))
+        # movement.move(move)
+
 
     #movement.moveFromTo(current_pos, destination_pos)
 

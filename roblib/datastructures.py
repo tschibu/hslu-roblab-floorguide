@@ -13,4 +13,7 @@ class MoveCommand():
     def getDegrees(self):
         return self.degrees
 
+    def getText(self):
+        return str(self.x)
+
 Coordinate = MoveCommand

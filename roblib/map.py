@@ -9,14 +9,20 @@ DEGREE = "deg"
 SQUARE = "square"
 X = "x"
 Y = "y"
-
+PASSABLE = "passable"
 
 class Map:
+    """
+    The central map class with all nodes.
+    """
     def __init__(self):
         self.map_size_x = 0
         self.map_size_y = 0
         self.nodes = {}
 
+    """
+    Load the json file and generate the map.
+    """
     def load_json(self):
         with open("webapp/html/json/map.json") as json_file:
             data = json.load(json_file)
@@ -30,12 +36,22 @@ class Map:
                     r = Room("", n[ROOM][NAME], n[ROOM][DEGREE])
                 else:
                     r = None;
-                node = Node(n["x"], n["y"], r)
+                if PASSABLE in n:
+                    passable = n[PASSABLE]
+                else:
+                    passable = None;
+                node = Node(n["x"], n["y"], passable, r)
                 self.nodes[str(n["x"]) + ":" + str(n["y"])] = node
+
+            Logger.info("map.py", "load_json", "successfully load map from json file.")
             self.neighbor_alg()
 
+
+    """
+    Algorithm to create the relationship / neighbor between the nodes.
+    """
     def neighbor_alg(self):
-        Logger.info("Map.neighbor_alg", "state_neighbor_calc", "start")
+        Logger.info("map.py", "neighbor_alg", "Start creating relationship between the nodes.")
         for n in self.nodes.itervalues():
             right_node = str((n.x + 1)) + ":" + str(n.y)
             left_node = str((n.x - 1)) + ":" + str(n.y)
@@ -53,4 +69,5 @@ class Map:
 
             if(self.nodes.get(up_node) is not None):
                 n.set_up(self.nodes[up_node])
-        Logger.info("Map.neighbor", "state_neighbor_calc", "finished")
+
+        Logger.info("map.py", "neighbor_alg", "Map with relationship between the nodes calculated.")
