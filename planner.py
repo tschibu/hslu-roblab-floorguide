@@ -6,10 +6,10 @@ from roblib.datastructures import Coordinate
 
 class Planner():
     def __init__(self):
-        map = Map()
-        map.load_json()
-        self.pepper_matrix = np.ones((map.map_size_x, map.map_size_y), dtype=int)
-        for n in map.nodes.itervalues():
+        self.map = Map()
+        self.map.load_json()
+        self.pepper_matrix = np.ones((self.map.map_size_x, self.map.map_size_y), dtype=int)
+        for n in self.map.nodes.itervalues():
             if (n.is_passable()):
                 self.pepper_matrix[n.x][n.y] = 0
 
@@ -62,7 +62,7 @@ class Planner():
                 moveList.append(MoveCommand(0, 0, turn))
             current_direction = new_direction
 
-            node = map.nodes['%d:%d' % (waypoint[0], waypoint[1])]
+            node = self.map.nodes['%d:%d' % (waypoint[0], waypoint[1])]
             naoMarkDegree = None
             if node.get_naomark() != None:
                 naoMarkDegree = node.get_naomark().get_degree()

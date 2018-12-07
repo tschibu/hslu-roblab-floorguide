@@ -49,7 +49,7 @@ class Map:
                 node = Node(n["x"], n["y"], passable, r, naomark)
                 self.nodes[str(n["x"]) + ":" + str(n["y"])] = node
 
-            Logger.info("map.py", "load_json", "successfully load map from json file.")
+            Logger.info("map.py", "load_json", "successfully load map from web app file.")
             self.neighbor_alg()
 
 

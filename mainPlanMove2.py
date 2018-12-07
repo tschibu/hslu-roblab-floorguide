@@ -9,10 +9,11 @@ from movement import Movement
 from speech import Speech
 from tracer import Tracer
 
+
 roboterName = "Amber"
 initPosition = "StandZero" # StandInit, StandZero, Crouch
 current_pos = Coordinate(8, 2, 270)
-destination_pos = Coordinate(49, 19, 90)
+destination_pos = Coordinate(4, 18, 90)
 
 #Main entry point for the Planner & Movement Proof-of-Concept
 def _main():
