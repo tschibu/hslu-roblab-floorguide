@@ -1,4 +1,16 @@
-var requestURL = '/json/map.json';
+var session; //Store session of pepper
+try {
+    QiSession(function (s) {
+        session = s;
+        alert("QiSession connected!");
+    }, function () {
+        alert("QiSession connection Failed!");
+    });
+} catch (err) {
+    alert("QiSession not Found! Error: " + err);
+}
+
+var requestURL = 'json/map.json';
 var request = new XMLHttpRequest();
 
 request.open('GET', requestURL);
@@ -11,11 +23,9 @@ request.onload = function () {
 }
 
 function isEmpty(obj) {
-    for(var prop in obj) {
-        if(obj.hasOwnProperty(prop))
-            { return false; }
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) { return false; }
     }
-
     return JSON.stringify(obj) === JSON.stringify({});
 }
 
@@ -29,8 +39,8 @@ function drawButtons(data) {
     var table = document.createElement('table');
     table.setAttribute('id', 'buttons');
     var row = document.createElement('tr');
-    for (var i = 0; i < roomNodes.length; i++, count++) {
-        if(count >= maxPerRow) {
+    for (var i = 0; i < roomNodes.length; i++ , count++) {
+        if (count >= maxPerRow) {
             //new row
             table.appendChild(row);
             row = document.createElement('tr');
@@ -51,25 +61,16 @@ function drawButtons(data) {
 function onButtonClick(event) {
     alert("you pressed on: " + event.path[0].id);
 
-    QiSession(function (session) {
-        alert("QiSession connected!");
-        triggerEvent();
-    }, function () {
-        alert("QiSession disconnected!");
-    });
+    triggerEvent(event.path[0].id);
 }
 
-function triggerEvent() {
-    QiSession.connect(function (session) {
-        session.service("ALMemory").then(function (ALMemory) {
-            alert("raise FGButtonClicked");
-            ALMemory.raiseEvent("FGButtonClicked", event.path[0].id);
-        }, function (error) {
-            console.log("An error occurred:", error);
-        });
-    }, onError);
-}
-
-function onError(err) {
-    alert(err);
+function triggerEvent(roomNumber) {
+    session.service('ALTextToSpeech').then(function (tts) {
+        var txt = 'Hey Roblab Looser! I bring you to Room ' + roomNumber;
+        alert(txt);
+        tts.say(txt);
+        //tts.say(txt);
+    }, function (error) {
+        alert(error);
+    })
 }
