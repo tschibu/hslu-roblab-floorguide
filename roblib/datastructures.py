@@ -1,9 +1,10 @@
 class MoveCommand():
-    def __init__(self, x, y, degrees, naoMarkDegree=None):
+    def __init__(self, x, y, degrees, isCalibrationCmd=False, naoMarkId=0):
         self.x = x
         self.y = y
         self.degrees = degrees
-        self.naoMarkDegree = naoMarkDegree
+        self.isCalibrationCmd = isCalibrationCmd
+        self.naoMarkId = naoMarkId
 
     def getX(self):
         return self.x
@@ -17,7 +18,10 @@ class MoveCommand():
     def getText(self):
         return str(self.x)
 
-    def getNaoMarkDegree(self):
-        return self.naoMarkDegree
+    def isCalibrationCmd(self):
+        return self.isCalibrationCmd
+
+    def getNaoMarkId(self):
+        return self.naoMarkId
 
 Coordinate = MoveCommand

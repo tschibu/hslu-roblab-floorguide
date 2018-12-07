@@ -2,6 +2,11 @@ from logger import Logger
 from roblib.node import Node, Room, Naomark
 import json
 
+"""
+Path to actual map json file
+"""
+JSON_PATH = "webapp_map/choreograph/html/json/map.json"
+
 NODES = "nodes"
 ROOM = "room"
 NAME = "name"
@@ -26,7 +31,7 @@ class Map:
     Load the json file and generate the map.
     """
     def load_json(self):
-        with open("webapp/html/json/map.json") as json_file:
+        with open(JSON_PATH) as json_file:
             data = json.load(json_file)
 
             size = data[SQUARE]

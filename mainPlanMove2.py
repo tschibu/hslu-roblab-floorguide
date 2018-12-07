@@ -7,13 +7,14 @@ from roblib.datastructures import Coordinate
 from planner import Planner
 from movement import Movement
 from speech import Speech
+from landMarkDetection import LMDetection
 from tracer import Tracer
 
 
 roboterName = "Amber"
 initPosition = "StandZero" # StandInit, StandZero, Crouch
 current_pos = Coordinate(8, 2, 270)
-destination_pos = Coordinate(4, 18, 90)
+destination_pos = Coordinate(4, 18, 180)
 
 #Main entry point for the Planner & Movement Proof-of-Concept
 def _main():
@@ -31,18 +32,20 @@ def _main():
     Speech(robot)
     planner = Planner()
     movement = Movement(robot)
+    possynchronizer = LMDetection(robot)
     moveCmds = planner.getMoveCommands(current_pos, destination_pos)
 
     # info to the audience
     Logger.info("mainPlanMove2.py", "_main", "I have %d movements to do." % len(moveCmds))
 
-    for move in moveCmds:
-        Logger.info("mainPlanMove2.py", "_main", "Execute move command with " + move.getText())
-        print("MoveCommand({}, {}, {})".format(move.getX(), move.getY(), move.getDegrees()))
-        # movement.move(move)
-
-
-    #movement.moveFromTo(current_pos, destination_pos)
+    for cmd in moveCmds:
+        Logger.info("mainPlanMove2.py", "_main", "Execute move command with " + cmd.getText())
+        print("MoveCommand({}, {}, {})".format(cmd.getX(), cmd.getY(), cmd.getDegrees()))
+        if cmd.isCalibrationCmd():
+            movement.move(cmd)
+            possynchronizer.calibratePosition(cmd.getNaoMarkId())
+        else:
+            movement.move(cmd)
 
 if __name__ == "__main__":
     _main()

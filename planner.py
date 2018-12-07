@@ -56,19 +56,23 @@ class Planner():
             if direction[1] > 0:
                 # go up
                 new_direction = 180
-            turn = self._getTurnDegrees(current_direction, new_direction)
 
+            distance = abs(direction[0] + direction[1])
+            turn = self._getTurnDegrees(current_direction, new_direction)
             if turn != 0:
                 moveList.append(MoveCommand(0, 0, turn))
-            current_direction = new_direction
+            if distance != 0:
+                moveList.append(MoveCommand(distance, 0, 0))
 
             node = self.map.nodes['%d:%d' % (waypoint[0], waypoint[1])]
-            naoMarkDegree = None
             if node.get_naomark() != None:
                 naoMarkDegree = node.get_naomark().get_degree()
-            # drive command
-            distance = abs(direction[0] + direction[1])
-            moveList.append(MoveCommand(distance, 0, 0, naoMarkDegree))
+                degrees = self._getTurnDegrees(current_direction, naoMarkDegree)
+                moveList.append(MoveCommand(0, 0, degrees, True, node.get_naomark().get_id()))
+                if degrees != 0:
+                    moveList.append(MoveCommand(0, 0, -degrees))
+
+            current_direction = new_direction
             prev_waypoint = waypoint
 
         turn = destinationPos.getDegrees() - current_direction

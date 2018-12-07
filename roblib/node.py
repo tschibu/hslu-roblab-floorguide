@@ -53,3 +53,6 @@ class Naomark:
 
     def get_degree(self):
         return self.degree
+
+    def get_id(self):
+        return self.id
