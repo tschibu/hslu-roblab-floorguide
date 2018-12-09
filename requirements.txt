@@ -2,3 +2,5 @@ os
 datetime
 json
 time
+pillow
+google-cloud-vision

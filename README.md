@@ -1,6 +1,6 @@
 _Cognitive Robotics Lab HS2018 - Team 10_
 
-# Floor Guide
+# FloorGuide
 ## Aufbau Umgebung
 Um die Applikation Floor Guide zu verwenden muss zuerst die Umgebung vorbereitet sein.
 
@@ -47,3 +47,19 @@ http://doc.aldebaran.com/2-5/naoqi/vision/allandmarkdetection.html#allandmarkdet
 * Tracer Auswertung
 * Path Updaten
 * Position Updaten
+
+
+## Google Vision API
+### Install package for Google Vision API
+```
+pip install --upgrade google-cloud-vision
+pip install --upgrade pillow
+```
+Check if you have set de API-Access Key:
+```
+export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
+```
+The key is in the `res`-folder.
+
+
+
