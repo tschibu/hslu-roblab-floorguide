@@ -61,5 +61,15 @@ export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
 ```
 The key is in the `res`-folder.
 
+#  Naming Conventions
+Type | Conventions 
+--- | --- 
+Packages | `lower_case_with_underscores`|
+Modules | `lower_case_with_underscores`
+Classes | `CapitalizedWords`
+Exceptions | `CapitalizedWords` 
+Functions | `lower_case_with_underscores()`
+Constants | `_UPPERCASE`
+Local Variables | `lower_case_with_underscores`
 
 
