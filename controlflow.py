@@ -7,9 +7,11 @@ from roblib.datastructures import Coordinate
 from planner import Planner
 from movement import Movement
 from speech import Speech
+from doorChecker import DoorChecker
 from positionCalibrator import PositionCalibrator
 from tracer import Tracer
 from sensorHandler import SensorHandler
+from tabletHandler import TabletHandler
 
 # Robot to use
 _ROBOT_NAME = "Amber"
@@ -21,19 +23,20 @@ _START_COORDINATE = Coordinate(8, 2, 270)
 class ControlFlow():
     def __init__(self):
         self.config = PepperConfiguration(_ROBOT_NAME)
-        if(not config.isAvailable()):
-            Logger.err("ControlFlow", "checkAvailability", "name: " + config.Name + ", ip: " + config.Ip + " not reachable!")
+        if(not self.config.isAvailable()):
+            Logger.err("ControlFlow", "checkAvailability", "name: " + self.config.Name + ", ip: " + self.config.Ip + " not reachable!")
             sys.exit(1) #Abort since robot is not available...
-        self.robot = Robot(config)
+        self.robot = Robot(self.config)
         Speech(self.robot) #Initialize Speech (static class, no reference needed)
+        DoorChecker(self.robot) #Initialize DoorChecker (static class, no reference needed)
         TabletHandler(self.robot) #Initialize TabletHandler (static class, no reference needed)
         self.sensorhandler = SensorHandler()
         self.planner = Planner()
-        self.movement = Movement(robot)
+        self.movement = Movement(self.robot)
         self.poscalib = PositionCalibrator()
 
     def init(self):
-        robot.ALRobotPosture.goToPosture(_INIT_POSTURE, 1)
+        self.robot.ALRobotPosture.goToPosture(_INIT_POSTURE, 1)
         self.sensorhandler.write_operation_modes(0.0) #Laser and Obstacle Detection Off
         return True
 
@@ -46,7 +49,7 @@ class ControlFlow():
     def on_room_selected(self, value):
         TabletHandler.startApp(TabletHandler.getMapApp())
         coordinate = self.planner.get_coor_by_room_name(value)
-        if coordinate != None
+        if coordinate != None:
             self.move_to_room(coordinate)
         else:
             Logger.err("ControlFlow", "onRoomSelected", "could not find specified room - abort behavior")
@@ -67,8 +70,8 @@ class ControlFlow():
         self.announce_destination()
         self.go_to_start_coordinate()
 
-    def announce_destination(self):
-        pass
+    def announce_destination(self, door_name):
+        DoorChecker.check_door(door_name)
 
     def go_to_start_coordiante(self):
         pass

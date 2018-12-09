@@ -15,7 +15,7 @@ class DoorChecker():
         _DOOR_CHECKER = self.camera
 
     @staticmethod
-    def check_door():
+    def check_door(door_name):
         global _DOOR_CHECKER
         if _DOOR_CHECKER:
             _DOOR_CHECKER.takePicture(_PEPPER_PATH, _FILENAME)
@@ -33,12 +33,9 @@ class DoorChecker():
             # Language hint codes for handwritten OCR:
             # en-t-i0-handwrit, mul-Latn-t-i0-handwrit
             # Note: Use only one language hint code per request for handwritten OCR.
-            image_context = vision.types.ImageContext(
-                language_hints=['en-t-i0-handwrit'])
+            image_context = vision.types.ImageContext(language_hints=['en-t-i0-handwrit'])
 
-            response = client.document_text_detection(
-                image=image,
-                image_context=image_context)
+            response = client.document_text_detection(image=image,image_context=image_context)
 
             print(response.full_text_annotation.text.strip())
             return True
