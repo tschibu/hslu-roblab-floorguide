@@ -1,5 +1,5 @@
-from pynaoqi_mate import Robot
 from configuration import PepperConfiguration
+from pynaoqi_mate import Robot
 from doorChecker import DoorChecker
 from logger import Logger
 import sys
@@ -19,7 +19,10 @@ def _main():
 
     # init Door Checker
     DoorChecker(robot)
-    DoorChecker.check_door()
+    DoorChecker.check_door("302")
+
+    # Test
+    #robot.ALPhotoCapture.
 
 if __name__ == "__main__":
     _main()

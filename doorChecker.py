@@ -2,6 +2,7 @@ import io
 import os
 from google.cloud import vision_v1p3beta1 as vision
 import time
+import datetime
 
 _DOOR_CHECKER = None
 _PEPPER_PATH = "/home/nao/recordings/cameras"
@@ -18,13 +19,14 @@ class DoorChecker():
     def check_door(door_name):
         global _DOOR_CHECKER
         if _DOOR_CHECKER:
-            _DOOR_CHECKER.takePicture(_PEPPER_PATH, _FILENAME)
+            # Save top picture
+            _DOOR_CHECKER.setCameraID(0)
+            _DOOR_CHECKER.takePicture2(_PEPPER_PATH, _FILENAME, True)
             os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../res/Pepper-4fd1ecb47687.json"
 
             # Google Vision API
             client = vision.ImageAnnotatorClient()
 
-            time.sleep(2)
             with io.open(_PEPPER_PATH + "/" + _FILENAME, 'rb') as image_file:
                 content = image_file.read()
 
@@ -35,8 +37,12 @@ class DoorChecker():
             # Note: Use only one language hint code per request for handwritten OCR.
             image_context = vision.types.ImageContext(language_hints=['en-t-i0-handwrit'])
 
-            response = client.document_text_detection(image=image,image_context=image_context)
+            response = client.document_text_detection(image=image, image_context=image_context)
 
             print(response.full_text_annotation.text.strip())
+
+            #TODO Houskeeping
+
             return True
-        return False
+        else:
+            return False
