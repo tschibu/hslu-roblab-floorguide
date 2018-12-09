@@ -36,3 +36,15 @@ cd ~/.local/share/PackageManager/apps/roomselection_web/html
 
 #### Markers
 http://doc.aldebaran.com/2-5/naoqi/vision/allandmarkdetection.html#allandmarkdetection
+
+### Open Todos
+* Was passiert wenn jemand vor Pepper steht nachdem er den Raum ausgewählt hat?
+* Was passiert wenn wir ein Hindernis haben auf dem Weg?
+* Was passiwert wenn der Kopf schräg ist und Pepper sich nicht Kalibrieren kann?
+* Tür erkennen und Schlusswort sagen
+* Path Updaten
+* Position Updaten
+* Ausgangsposition
+* Statemachine / Controlflow
+* Tracer Auswertung
+* Sensoren Limits heruntersetzen
