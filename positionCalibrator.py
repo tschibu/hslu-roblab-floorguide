@@ -5,7 +5,7 @@ from movement import Movement
 from logger import Logger
 import time
 
-class LMDetection():
+class PositionCalibrator():
     def __init__(self, session):
         self.session = session
         self.landMarkDetection = session.ALLandMarkDetection
@@ -18,10 +18,10 @@ class LMDetection():
 
     def calibratePosition(self, id=None):
         for i in range(3):
-            Logger.info("LMDetection", "calibratePosition", "Looking for landmark")
+            Logger.info("PositionCalibrator", "calibratePosition", "Looking for landmark")
             landMark = self._getLandMark()
             if landMark == None or (id != None and landMark[1][0] != id):
-                Logger.info("LMDetection", "calibratePosition", "Landmark not found")
+                Logger.info("PositionCalibrator", "calibratePosition", "Landmark not found")
                 return False
             markShapeInfo = landMark[0]
             y = markShapeInfo[1]
@@ -29,9 +29,9 @@ class LMDetection():
             # size wanted: 0.131
             x = (0.131 - size) * 15
             if abs(y) < 0.1 and abs(x) < 0.1:
-                Logger.info("LMDetection", "calibratePosition", "Calibration complete")
+                Logger.info("PositionCalibrator", "calibratePosition", "Calibration complete")
                 break
-            Logger.info("LMDetection", "calibratePosition", "Calibrating position")
+            Logger.info("PositionCalibrator", "calibratePosition", "Calibrating position")
             self.movement.moveCalibrate(x, y)
             landMark = self._getLandMark()
             y = markShapeInfo[1]
@@ -39,7 +39,7 @@ class LMDetection():
         return True
 
     def _getLandMark(self):
-        #Logger.info("LMDetection", "checkForLM", "Looking for Landmark")
+        #Logger.info("PositionCalibrator", "checkForLM", "Looking for Landmark")
         memValue = "LandmarkDetected"
         self.landMarkDetection.subscribe("Test_Landmark", 500, 0.0)
         for i in range(5):

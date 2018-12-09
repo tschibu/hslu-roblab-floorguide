@@ -7,7 +7,7 @@ from roblib.datastructures import Coordinate
 from planner import Planner
 from movement import Movement
 from speech import Speech
-from landMarkDetection import LMDetection
+from positionCalibrator import PositionCalibrator
 from tracer import Tracer
 
 
@@ -40,7 +40,7 @@ def _main():
     Speech(robot)
     planner = Planner()
     movement = Movement(robot)
-    possynchronizer = LMDetection(robot)
+    poscalibrator = PositionCalibrator(robot)
     moveCmds = planner.getMoveCommands(current_pos, destination_pos)
 
     # info to the audience
@@ -51,7 +51,7 @@ def _main():
         print("MoveCommand({}, {}, {})".format(cmd.getX(), cmd.getY(), cmd.getDegrees()))
         if cmd.get_isCalibrationCmd() == True:
             movement.move(cmd)
-            possynchronizer.calibratePosition(cmd.getNaoMarkId())
+            poscalibrator.calibratePosition(cmd.getNaoMarkId())
         else:
             movement.move(cmd)
 
