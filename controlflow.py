@@ -1,5 +1,6 @@
 import sys
 import time
+import json
 from logger import Logger
 from pynaoqi_mate import Robot
 from configuration import PepperConfiguration
@@ -7,7 +8,7 @@ from roblib.datastructures import Coordinate
 from planner import Planner
 from movement import Movement
 from speech import Speech
-#from doorChecker import DoorChecker
+from doorChecker import DoorChecker
 from positionCalibrator import PositionCalibrator
 from tracer import Tracer
 from sensorHandler import SensorHandler
@@ -30,7 +31,7 @@ class ControlFlow():
             sys.exit(1) #Abort since robot is not available...
         self.robot = Robot(self.config)
         Speech(self.robot) #Initialize Speech (static class, no reference needed)
-        #DoorChecker(self.robot) #Initialize DoorChecker (static class, no reference needed)
+        DoorChecker(self.robot) #Initialize DoorChecker (static class, no reference needed)
         TabletHandler(self.robot) #Initialize TabletHandler (static class, no reference needed)
         self.sensorhandler = SensorHandler(self.robot)
         self.planner = Planner()
@@ -74,6 +75,13 @@ class ControlFlow():
         Logger.info("ControlFlow", "moveToLocation", "I have %d movements to do." % len(moveCmds))
 
         for cmd in moveCmds:
+            next_coordinate = start_coordinate
+            next_coordinate.x = next_coordinate.x + cmd.x
+            next_coordinate.y = next_coordinate.y + cmd.y
+            next_coordinate.degrees = next_coordinate.degrees + cmd.degrees
+            if next_coordinate.degrees >= 360:
+                next_coordinate.degrees = 0
+
             Logger.info("ControlFlow", "moveToLocation", "Execute move command with " + cmd.getText() + " units ")
             if cmd.get_isCalibrationCmd():
                 if not self.movement.move(cmd):
@@ -83,11 +91,13 @@ class ControlFlow():
             else:
                 if not self.movement.move(cmd):
                     Logger.err("ControlFlow", "moveToLocation", "Could not move to the given Position. Is something in my way?")
+                self._write_actual_position(next_coordinate)
 
         return end_coordinate #TODO return real end position!
 
     def announce_destination(self, door_name):
-        #DoorChecker.check_door(door_name)
+        self.robot.ALRobotPosture.goToPosture(_INIT_POSTURE, 1)
+        DoorChecker.check_door(door_name)
         Logger.info("ControlFlow", "announceDestination", "I found the correct room, it's directly in front of me")
         time.sleep(5)
 
@@ -97,6 +107,16 @@ class ControlFlow():
         global _RUN
         _RUN = False
         TabletHandler.startApp(TabletHandler.getRoomSelectionApp())
+
+    def _write_actual_position(self, coordinate):
+        pos_obj = {}
+        obj = {}
+        obj['x'] = coordinate.getX()
+        obj['y'] = coordinate.getY()
+        obj['degrees'] = coordinate.getDegrees()
+        pos_obj['position'] = obj
+        with open('position.json', 'w') as posfile:
+            json.dump(pos_obj, posfile)
 
 #Main entry point for the Floor Guide
 def _main():
