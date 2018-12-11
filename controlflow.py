@@ -13,6 +13,7 @@ from positionCalibrator import PositionCalibrator
 from tracer import Tracer
 from sensorHandler import SensorHandler
 from tabletHandler import TabletHandler
+from filetransfer import Filetransfer
 
 # Robot to use
 _ROBOT_NAME = "Porter"
@@ -22,6 +23,9 @@ _INIT_POSTURE = "StandInit" # StandInit, StandZero, Crouch
 _START_COORDINATE = Coordinate(1, 4, 360)
 # Global flag which indicates that App should run
 _RUN = True
+# Position JSON
+_POSITION_LOCAL = "./position.json"
+_POSITION_REMOTE = "/home/nao/.local/share/PackageManager/apps/FloorGuide_Map/html/json/position.json"
 
 class ControlFlow():
     def __init__(self):
@@ -33,6 +37,7 @@ class ControlFlow():
         Speech(self.robot) #Initialize Speech (static class, no reference needed)
         DoorChecker(self.robot) #Initialize DoorChecker (static class, no reference needed)
         TabletHandler(self.robot) #Initialize TabletHandler (static class, no reference needed)
+        Filetransfer(self.config) #Initialize Filetransfer (static class, no reference needed)
         self.sensorhandler = SensorHandler(self.robot)
         self.planner = Planner()
         self.movement = Movement(self.robot)
@@ -115,8 +120,9 @@ class ControlFlow():
         obj['y'] = coordinate.getY()
         obj['degrees'] = coordinate.getDegrees()
         pos_obj['position'] = obj
-        with open('position.json', 'w') as posfile:
+        with open(_POSITION_LOCAL, 'w') as posfile:
             json.dump(pos_obj, posfile)
+        Filetransfer.transfer_file_from_local_to_pepper(_POSITION_LOCAL, _POSITION_REMOTE)
 
 #Main entry point for the Floor Guide
 def _main():

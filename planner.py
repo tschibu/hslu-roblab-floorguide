@@ -3,6 +3,11 @@ from astar.astar import Astar
 from roblib.map import Map
 import numpy as np
 from roblib.datastructures import MoveCommand
+from filetransfer import Filetransfer
+
+# Path JSON
+_PATH_LOCAL = "./path.json"
+_PATH_REMOTE = "/home/nao/.local/share/PackageManager/apps/FloorGuide_Map/html/json/path.json"
 
 class Planner():
     def __init__(self):
@@ -97,8 +102,9 @@ class Planner():
             obj['y'] = p[1]
             array.append(obj)
         path_obj['path'] = array
-        with open('path.json', 'w') as pathfile:
+        with open(_PATH_LOCAL, 'w') as pathfile:
             json.dump(path_obj, pathfile)
+        Filetransfer.transfer_file_from_local_to_pepper(_PATH_LOCAL, _PATH_REMOTE)
 
     def get_coor_by_room_name(self, room_name):
         for n in self.map.nodes.itervalues():
