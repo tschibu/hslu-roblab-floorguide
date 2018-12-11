@@ -58,37 +58,34 @@ body, html {
 .grid td.deg-90,
 .grid td.deg-180,
 .grid td.deg-270 {
+  color: #EEE;
   width: 0;
   height: 0;
 }
 
-.grid td.deg-180::before {
-  color: #EEE;
-  /* content: '\21CA';
+/* .grid td.deg-180::before {
+  content: '\21CA';
     font-family: sans-serif;
-    font-size: 24px; */
+    font-size: 24px;
 }
 
 .grid td.deg-270::before {
-  color: #EEE;
-  /* content: '\21C7';
+  content: '\21C7';
   font-family: sans-serif;
-  font-size: 24px; */
+  font-size: 24px;
 }
 
 .grid td.deg-0::before {
-  color: #EEE;
-  /* content: '\21C8';
+  content: '\21C8';
   font-family: sans-serif;
-  font-size: 24px; */
+  font-size: 24px;
 }
 
 .grid td.deg-90::before {
-  color: #EEE;
-  /* content: '\21C9';
+  content: '\21C9';
   font-family: sans-serif;
-  font-size: 24px; */
-}
+  font-size: 24px;
+} */
 
 /* blinking animaion for position field */
 @-webkit-keyframes blinking-position {

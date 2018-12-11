@@ -1,20 +1,3 @@
-function drawPosition(position) {
-
-    // get rid of position classes
-    var positionElements = Array.from(document.querySelectorAll('.position'));
-    positionElements.forEach(function (e) {
-        e.className = "floor";
-    });
-
-    // add new position class to element
-    var id = position['x'] + '-' + position['y'];
-    var deg = position['deg'];
-    var e = document.getElementById(id);
-    e.className += " position";
-    e.className += " deg-" + deg;
-
-}
-
 function drawPath(path) {
 
     // get rid of path classes
@@ -31,9 +14,9 @@ function drawPath(path) {
 
 }
 
-function updateMap() {
+function calcPath() {
 
-    var requestURL = 'json/position.json';
+    var requestURL = 'json/path.json';
     var request = new XMLHttpRequest();
 
     request.open('GET', requestURL+ ((/\?/).test(requestURL) ? "&" : "?") + (new Date()).getTime());
@@ -43,11 +26,8 @@ function updateMap() {
     request.onload = function () {
 
         var jsonObj = request.response;
-
-        var position = jsonObj['position'];
         var path = jsonObj['path'];
 
-        drawPosition(position);
         drawPath(path);
 
     }

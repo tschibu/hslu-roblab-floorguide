@@ -64,7 +64,7 @@ function drawMap(initMap) {
   $("#map-canvas").html(drawGrid(x, y));
 
   drawNodes(nodes);
-
-  window.setInterval(updateMap, 2000);
+  calcPath();
+  window.setInterval(updatePosition, 2000);
 
 }
