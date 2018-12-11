@@ -14,11 +14,13 @@ from sensorHandler import SensorHandler
 from tabletHandler import TabletHandler
 
 # Robot to use
-_ROBOT_NAME = "Amber"
+_ROBOT_NAME = "Porter"
 # Default Posture
-_INIT_POSTURE = "StandZero" # StandInit, StandZero, Crouch
+_INIT_POSTURE = "StandInit" # StandInit, StandZero, Crouch
 # Start Coordiante
-_START_COORDINATE = Coordinate(1, 4, 180)
+_START_COORDINATE = Coordinate(1, 4, 360)
+# Global flag which indicates that App should run
+_RUN = True
 
 class ControlFlow():
     def __init__(self):
@@ -37,7 +39,7 @@ class ControlFlow():
 
     def init(self):
         self.robot.ALRobotPosture.goToPosture(_INIT_POSTURE, 1)
-        self.sensorhandler.write_operation_modes(0.0) #Laser and Obstacle Detection Off
+        #self.sensorhandler.write_operation_modes(1.0) #Laser and Obstacle Detection Off
         return True
 
     def run(self):
@@ -46,8 +48,8 @@ class ControlFlow():
         sub = self.robot.ALMemory.subscriber("FGButtonClicked")
         sub.signal.connect(self.on_room_selected)
 
-        while True:
-            pass #TODO global boolean
+        while _RUN:
+            pass
 
     def on_room_selected(self, value):
         TabletHandler.startApp(TabletHandler.getMapApp())
@@ -62,27 +64,39 @@ class ControlFlow():
             self.init()
 
     def move_to_room(self, coordinate):
-        moveCmds = self.planner.getMoveCommands(_START_COORDINATE, coordinate)
-        Logger.info("ControlFlow", "bringToRoom", "I have %d movements to do." % len(moveCmds))
+        end_coordinate = self.move_to_location(_START_COORDINATE, coordinate)
+
+        #self.announce_destination()
+        self.go_to_start_coordinate(end_coordinate)
+
+    def move_to_location(self, start_coordinate, end_coordinate):
+        moveCmds = self.planner.getMoveCommands(start_coordinate, end_coordinate)
+        Logger.info("ControlFlow", "moveToLocation", "I have %d movements to do." % len(moveCmds))
 
         for cmd in moveCmds:
-            Logger.info("ControlFlow", "bringToRoom", "Execute move command with " + cmd.getText() + " units ")
+            Logger.info("ControlFlow", "moveToLocation", "Execute move command with " + cmd.getText() + " units ")
             if cmd.get_isCalibrationCmd():
                 if not self.movement.move(cmd):
-                    Logger.err("ControlFlow", "bringToRoom", "Could not move to the given Position. Is something in my way?")
+                    Logger.err("ControlFlow", "moveToLocation", "Could not move to the given Position. Is something in my way?")
+                self.robot.ALRobotPosture.goToPosture(_INIT_POSTURE, 1)
                 self.poscalib.calibratePosition(cmd.getNaoMarkId())
             else:
                 if not self.movement.move(cmd):
-                    Logger.err("ControlFlow", "bringToRoom", "Could not move to the given Position. Is something in my way?")
+                    Logger.err("ControlFlow", "moveToLocation", "Could not move to the given Position. Is something in my way?")
 
-        #self.announce_destination()
-        self.go_to_start_coordinate()
+        return end_coordinate #TODO return real end position!
 
     def announce_destination(self, door_name):
-        DoorChecker.check_door(door_name)
+        #DoorChecker.check_door(door_name)
+        Logger.info("ControlFlow", "announceDestination", "I found the correct room, it's directly in front of me")
+        time.sleep(5)
 
-    def go_to_start_coordinate(self):
-        pass
+    def go_to_start_coordinate(self, end_coordinate):
+        Logger.info("ControlFlow", "goToStartCoordinate", "Moving back to my initial position")
+        self.move_to_location(end_coordinate, _START_COORDINATE)
+        global _RUN
+        _RUN = False
+        TabletHandler.startApp(TabletHandler.getRoomSelectionApp())
 
 #Main entry point for the Floor Guide
 def _main():

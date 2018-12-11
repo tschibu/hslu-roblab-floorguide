@@ -13,7 +13,7 @@ class Movement():
         self.subscriberOnMoveFailed = self.memory.subscriber("MoveFailed")
         self.subscriberOnMoveFailed.signal.connect(self.onMoveFailed)
 
-    def onMoveFailed(eventName, value, subscriberIdentifier):
+    def onMoveFailed(self, eventName, value, subscriberIdentifier):
         Logger.err("Movement", "onMoveFailed", "eventName: " + eventName + ", value: " + value + ", subscriberIdentifier: " + subscriberIdentifier)
 
     def move(self, moveCmd):
