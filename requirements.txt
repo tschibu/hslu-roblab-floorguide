@@ -4,3 +4,4 @@ json
 time
 pillow
 google-cloud-vision
+paramiko

@@ -2,9 +2,11 @@ from configuration import PepperConfiguration
 from pynaoqi_mate import Robot
 from doorChecker import DoorChecker
 from logger import Logger
+from filetransfer import Filetransfer
+from speech import Speech
 import sys
 
-roboterName = "Amber"
+roboterName = "Porter"
 initPosition = "StandZero" # StandInit, StandZero, Crouch
 
 #Main entry point for the Planner & Movement Proof-of-Concept
@@ -16,10 +18,13 @@ def _main():
         sys.exit(1)
 
     robot = Robot(config)
+    Speech(robot)
+    Filetransfer(config)
 
     # init Door Checker
     DoorChecker(robot)
-    DoorChecker.check_door("302")
+    robot.ALRobotPosture.goToPosture("StandInit", 1)
+    DoorChecker.check_door("303")
 
     # Test
     #robot.ALPhotoCapture.
