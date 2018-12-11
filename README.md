@@ -57,7 +57,7 @@ cd ~/.local/share/PackageManager/apps/roomselection_web/html
 http://doc.aldebaran.com/2-5/naoqi/vision/allandmarkdetection.html#allandmarkdetection
 
 ### Open Todos
-- [ ] Prio01 : Sensoren Limits heruntersetzen
+- [x] Prio01 : Sensoren Limits heruntersetzen
 - [ ] Prio02 : Was passiwert wenn der Kopf schräg ist und Pepper sich nicht Kalibrieren kann?
 - [ ] Prio03 : Tür erkennen aus Bild ausschneiden
 - [ ] Prio04 : Was passiert wenn wir ein Hindernis haben auf dem Weg? / Ausgangsposition
@@ -68,15 +68,15 @@ http://doc.aldebaran.com/2-5/naoqi/vision/allandmarkdetection.html#allandmarkdet
 - [ ] Prio10 : Position Updaten
 
 
-#  Naming Conventions
-Type | Conventions 
---- | --- 
-Packages | `lower_case_with_underscores`|
-Modules | `lower_case_with_underscores`
-Classes | `CapitalizedWords`
-Exceptions | `CapitalizedWords` 
-Functions | `lower_case_with_underscores()`
-Constants | `_UPPERCASE`
+## Naming Conventions
+Type            | Conventions
+--------------- | ------------------------------
+Packages        | `lower_case_with_underscores`
+Modules         | `lower_case_with_underscores`
+Classes         | `CapitalizedWords`
+Exceptions      | `CapitalizedWords`
+Functions       | `lower_case_with_underscores()`
+Constants       | `_UPPERCASE`
 Local Variables | `lower_case_with_underscores`
 
 
