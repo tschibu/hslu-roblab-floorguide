@@ -16,9 +16,9 @@ from tabletHandler import TabletHandler
 # Robot to use
 _ROBOT_NAME = "Porter"
 # Default Posture
-_INIT_POSTURE = "StandZero" # StandInit, StandZero, Crouch
+_INIT_POSTURE = "StandInit" # StandInit, StandZero, Crouch
 # Start Coordiante
-_START_COORDINATE = Coordinate(1, 4, 180)
+_START_COORDINATE = Coordinate(1, 4, 360)
 # Global flag which indicates that App should run
 _RUN = True
 
@@ -78,6 +78,7 @@ class ControlFlow():
             if cmd.get_isCalibrationCmd():
                 if not self.movement.move(cmd):
                     Logger.err("ControlFlow", "moveToLocation", "Could not move to the given Position. Is something in my way?")
+                self.robot.ALRobotPosture.goToPosture(_INIT_POSTURE, 1)
                 self.poscalib.calibratePosition(cmd.getNaoMarkId())
             else:
                 if not self.movement.move(cmd):
