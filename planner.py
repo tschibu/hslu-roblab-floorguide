@@ -1,3 +1,4 @@
+import json
 from astar.astar import Astar
 from roblib.map import Map
 import numpy as np
@@ -17,8 +18,8 @@ class Planner():
         start = (current_pos.getX(), current_pos.getY())
         end = (destination_pos.getX(), destination_pos.getY())
         path = a.astar(self.pepper_matrix, start, end)
+        self._write_json_path(path)
         simplified_path = self._simplifyPath(path)
-
         mcs = self._getMoveList(current_pos, destination_pos, simplified_path)
 
         return mcs
@@ -86,6 +87,18 @@ class Planner():
         if turn < -180:
             turn += 360
         return turn
+
+    def _write_json_path(self, path):
+        path_obj = {}
+        array = []
+        for p in path:
+            obj = {}
+            obj['x'] = p[0]
+            obj['y'] = p[1]
+            array.append(obj)
+        path_obj['path'] = array
+        with open('path.json', 'w') as pathfile:
+            json.dump(path_obj, pathfile)
 
     def get_coor_by_room_name(self, room_name):
         for n in self.map.nodes.itervalues():
