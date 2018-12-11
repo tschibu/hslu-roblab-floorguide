@@ -7,7 +7,7 @@ from roblib.datastructures import Coordinate
 from planner import Planner
 from movement import Movement
 from speech import Speech
-from doorChecker import DoorChecker
+#from doorChecker import DoorChecker
 from positionCalibrator import PositionCalibrator
 from tracer import Tracer
 from sensorHandler import SensorHandler
@@ -18,7 +18,7 @@ _ROBOT_NAME = "Amber"
 # Default Posture
 _INIT_POSTURE = "StandZero" # StandInit, StandZero, Crouch
 # Start Coordiante
-_START_COORDINATE = Coordinate(8, 2, 270)
+_START_COORDINATE = Coordinate(1, 4, 180)
 
 class ControlFlow():
     def __init__(self):
@@ -28,12 +28,12 @@ class ControlFlow():
             sys.exit(1) #Abort since robot is not available...
         self.robot = Robot(self.config)
         Speech(self.robot) #Initialize Speech (static class, no reference needed)
-        DoorChecker(self.robot) #Initialize DoorChecker (static class, no reference needed)
+        #DoorChecker(self.robot) #Initialize DoorChecker (static class, no reference needed)
         TabletHandler(self.robot) #Initialize TabletHandler (static class, no reference needed)
-        self.sensorhandler = SensorHandler()
+        self.sensorhandler = SensorHandler(self.robot)
         self.planner = Planner()
         self.movement = Movement(self.robot)
-        self.poscalib = PositionCalibrator()
+        self.poscalib = PositionCalibrator(self.robot)
 
     def init(self):
         self.robot.ALRobotPosture.goToPosture(_INIT_POSTURE, 1)
@@ -46,10 +46,16 @@ class ControlFlow():
         sub = self.robot.ALMemory.subscriber("FGButtonClicked")
         sub.signal.connect(self.on_room_selected)
 
+        while True:
+            pass #TODO global boolean
+
     def on_room_selected(self, value):
         TabletHandler.startApp(TabletHandler.getMapApp())
+        print(value)
         coordinate = self.planner.get_coor_by_room_name(value)
         if coordinate != None:
+            Logger.info("ControlFlow", "onRoomSelected", "I will bring you to the room now. Go out of my way please!")
+            time.sleep(3)
             self.move_to_room(coordinate)
         else:
             Logger.err("ControlFlow", "onRoomSelected", "could not find specified room - abort behavior")
@@ -61,19 +67,21 @@ class ControlFlow():
 
         for cmd in moveCmds:
             Logger.info("ControlFlow", "bringToRoom", "Execute move command with " + cmd.getText() + " units ")
-            if cmd.get_isCalibrationCmd() == True:
-                self.movement.move(cmd) #TODO check if movement is ok
-                self.poscalibrator.calibratePosition(cmd.getNaoMarkId())
+            if cmd.get_isCalibrationCmd():
+                if not self.movement.move(cmd):
+                    Logger.err("ControlFlow", "bringToRoom", "Could not move to the given Position. Is something in my way?")
+                self.poscalib.calibratePosition(cmd.getNaoMarkId())
             else:
-                self.movement.move(cmd) #TODO check if movement is ok
+                if not self.movement.move(cmd):
+                    Logger.err("ControlFlow", "bringToRoom", "Could not move to the given Position. Is something in my way?")
 
-        self.announce_destination()
+        #self.announce_destination()
         self.go_to_start_coordinate()
 
     def announce_destination(self, door_name):
         DoorChecker.check_door(door_name)
 
-    def go_to_start_coordiante(self):
+    def go_to_start_coordinate(self):
         pass
 
 #Main entry point for the Floor Guide
