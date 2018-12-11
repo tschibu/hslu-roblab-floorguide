@@ -1,6 +1,25 @@
 _Cognitive Robotics Lab HS2018 - Team 10_
 
 # FloorGuide
+
+## Frameworks
+### pynaoqi_mate
+Der Code basiert auf das pynaoqi_mate-Framework
+https://github.com/uts-magic-lab/pynaoqi_mate
+und wurde auf die Pepper Roboer `amber` und `porter` der HSLU optimiert.
+
+### Google Vision API
+#### Install package for Google Vision API
+```
+pip install --upgrade google-cloud-vision
+pip install --upgrade pillow
+```
+Check if you have set de API-Access Key:
+```
+export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
+```
+The key is in the `res`-folder.
+
 ## Aufbau Umgebung
 Um die Applikation Floor Guide zu verwenden muss zuerst die Umgebung vorbereitet sein.
 
@@ -38,28 +57,16 @@ cd ~/.local/share/PackageManager/apps/roomselection_web/html
 http://doc.aldebaran.com/2-5/naoqi/vision/allandmarkdetection.html#allandmarkdetection
 
 ### Open Todos
-* Sensoren Limits heruntersetzen
-* Was passiwert wenn der Kopf schräg ist und Pepper sich nicht Kalibrieren kann?
-* Tür erkennen und Schlusswort sagen
-* Was passiert wenn wir ein Hindernis haben auf dem Weg? / Ausgangsposition
-* Was passiert wenn jemand vor Pepper steht nachdem er den Raum ausgewählt hat?
-* Statemachine / Controlflow
-* Tracer Auswertung
-* Path Updaten
-* Position Updaten
+- [ ] Prio01 : Sensoren Limits heruntersetzen
+- [ ] Prio02 : Was passiwert wenn der Kopf schräg ist und Pepper sich nicht Kalibrieren kann?
+- [ ] Prio03 : Tür erkennen aus Bild ausschneiden
+- [ ] Prio04 : Was passiert wenn wir ein Hindernis haben auf dem Weg? / Ausgangsposition
+- [ ] Prio05 : Was passiert wenn jemand vor Pepper steht nachdem er den Raum ausgewählt hat? (Lösung: Kopfsensor betätigen, wenn man dahinter steht.)
+- [ ] Prio06 : Statemachine / Controlflow
+- [ ] Prio08 : Tracer Auswertung
+- [ ] Prio09 : Path Updaten
+- [ ] Prio10 : Position Updaten
 
-
-## Google Vision API
-### Install package for Google Vision API
-```
-pip install --upgrade google-cloud-vision
-pip install --upgrade pillow
-```
-Check if you have set de API-Access Key:
-```
-export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
-```
-The key is in the `res`-folder.
 
 #  Naming Conventions
 Type | Conventions 
