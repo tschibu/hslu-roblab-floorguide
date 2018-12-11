@@ -7,7 +7,7 @@ from roblib.datastructures import Coordinate
 from planner import Planner
 from movement import Movement
 from speech import Speech
-#from doorChecker import DoorChecker
+from doorChecker import DoorChecker
 from positionCalibrator import PositionCalibrator
 from tracer import Tracer
 from sensorHandler import SensorHandler
@@ -30,7 +30,7 @@ class ControlFlow():
             sys.exit(1) #Abort since robot is not available...
         self.robot = Robot(self.config)
         Speech(self.robot) #Initialize Speech (static class, no reference needed)
-        #DoorChecker(self.robot) #Initialize DoorChecker (static class, no reference needed)
+        DoorChecker(self.robot) #Initialize DoorChecker (static class, no reference needed)
         TabletHandler(self.robot) #Initialize TabletHandler (static class, no reference needed)
         self.sensorhandler = SensorHandler(self.robot)
         self.planner = Planner()
@@ -87,7 +87,7 @@ class ControlFlow():
         return end_coordinate #TODO return real end position!
 
     def announce_destination(self, door_name):
-        #DoorChecker.check_door(door_name)
+        DoorChecker.check_door(door_name)
         Logger.info("ControlFlow", "announceDestination", "I found the correct room, it's directly in front of me")
         time.sleep(5)
 

@@ -16,9 +16,9 @@
 
 
 # amber
-deploy_user_host="nao@192.168.1.101"
+#deploy_user_host="nao@192.168.1.101"
 # porter
-# deploy_user_host="nao@192.168.1.102"
+deploy_user_host="nao@192.168.1.102"
 
 # relative to home directory unless preceded by a slash,
 # WARNING: watch out not to delete the whole thing when using:
