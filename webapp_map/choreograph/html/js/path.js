@@ -29,6 +29,7 @@ function calcPath() {
         var path = jsonObj['path'];
 
         drawPath(path);
+        updatePosition();
 
     }
 
