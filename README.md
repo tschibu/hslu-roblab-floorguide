@@ -58,14 +58,14 @@ http://doc.aldebaran.com/2-5/naoqi/vision/allandmarkdetection.html#allandmarkdet
 
 ### Open Todos
 - [x] Prio01 : Sensoren Limits heruntersetzen
-- [ ] Prio02 : Was passiwert wenn der Kopf schräg ist und Pepper sich nicht Kalibrieren kann?
-- [ ] Prio03 : Tür erkennen aus Bild ausschneiden
-- [ ] Prio04 : Was passiert wenn wir ein Hindernis haben auf dem Weg? / Ausgangsposition
-- [ ] Prio05 : Was passiert wenn jemand vor Pepper steht nachdem er den Raum ausgewählt hat? (Lösung: Kopfsensor betätigen, wenn man dahinter steht.)
-- [ ] Prio06 : Statemachine / Controlflow
-- [ ] Prio08 : Tracer Auswertung
-- [ ] Prio09 : Path Updaten
-- [ ] Prio10 : Position Updaten
+- [x] Prio02 : Was passiwert wenn der Kopf schräg ist und Pepper sich nicht Kalibrieren kann?
+- [x] Prio03 : Tür erkennen aus Bild ausschneiden
+- [x] Prio04 : Was passiert wenn wir ein Hindernis haben auf dem Weg? / Ausgangsposition
+- [x] Prio05 : Was passiert wenn jemand vor Pepper steht nachdem er den Raum ausgewählt hat? (Lösung: Kopfsensor betätigen, wenn man dahinter steht.)
+- [x] Prio06 : Statemachine / Controlflow
+- [x] Prio08 : Tracer Auswertung (verworfen)
+- [x] Prio09 : Path Updaten
+- [x] Prio10 : Position Updaten
 
 
 ## Naming Conventions

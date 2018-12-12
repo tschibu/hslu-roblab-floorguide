@@ -2,7 +2,6 @@ var session; //Store session of pepper
 try {
     QiSession(function (s) {
         session = s;
-        alert("QiSession connected!");
     }, function () {
         alert("QiSession connection Failed!");
     });
