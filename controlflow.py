@@ -93,7 +93,7 @@ class ControlFlow():
                     return None
                 if cmd.get_isCalibrationCmd():
                     self.robot.ALRobotPosture.goToPosture(_INIT_POSTURE, 1)
-                    self.poscalib.calibratePosition(cmd.getNaoMarkId())
+                    self.poscalib.calibratePosition()
 
         self._write_actual_position(self.currentpos)
         return end_coordinate #TODO return real end position!
