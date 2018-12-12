@@ -17,9 +17,9 @@ class MoveCommand():
 
     def getText(self):
         if self.x > 0:
-            return "Moving " + self.x + " units."
+            return "Moving " + str(self.x) + " units."
         elif self.degrees != 0:
-            return "Turning " + self.degrees + " degrees."
+            return "Turning " + str(self.degrees) + " degrees."
         else:
             return ""
 
