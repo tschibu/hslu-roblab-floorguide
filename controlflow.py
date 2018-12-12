@@ -20,7 +20,7 @@ _ROBOT_NAME = "Amber"
 # Default Posture
 _INIT_POSTURE = "StandInit" # StandInit, StandZero, Crouch
 # Start Coordiante
-_START_COORDINATE = Coordinate(1, 4, 0)
+_START_COORDINATE = Coordinate(8, 2, 90)
 # Global flag which indicates that App should run
 _RUN = True
 # Position JSON
@@ -68,15 +68,15 @@ class ControlFlow():
         if coordinate != None:
             Logger.info("ControlFlow", "onRoomSelected", "I will bring you to the room now. Please stand aside.")
             time.sleep(3)
-            self.move_to_room(coordinate)
+            self.move_to_room(coordinate, value)
         else:
             Logger.err("ControlFlow", "onRoomSelected", "could not find specified room - abort behavior")
             self.init()
 
-    def move_to_room(self, coordinate):
+    def move_to_room(self, coordinate, room_name):
         move_success = self.move_to_location(_START_COORDINATE, coordinate)
-        self.announce_destination()
         if move_success:
+            self.announce_destination(room_name)
             self.go_to_start_coordinate()
 
     def move_to_location(self, start_coordinate, end_coordinate):
@@ -86,7 +86,7 @@ class ControlFlow():
         for i in range(len(coord_list)):
             for cmd in self.planner.get_move_cmd_from_coord(self.currentpos, coord_list[i]):
 
-                Logger.info("ControlFlow", "moveToLocation", "Execute move command with " + cmd.getText() + " units ")
+                Logger.info("ControlFlow", "moveToLocation", cmd.getText())
                 if not self.movement.move(cmd):
                     Logger.err("ControlFlow", "moveToLocation", "Could not move to the given Position. Is something in my way?")
                     return False

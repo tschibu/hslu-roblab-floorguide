@@ -16,7 +16,12 @@ class MoveCommand():
         return self.degrees
 
     def getText(self):
-        return str(self.x)
+        if self.x > 0:
+            return "Moving " + self.x + " units."
+        elif self.degrees != 0:
+            return "Turning " + self.degrees + " degrees."
+        else:
+            return ""
 
     def get_isCalibrationCmd(self):
         return self.isCalibrationCmd

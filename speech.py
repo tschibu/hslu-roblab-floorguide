@@ -4,7 +4,8 @@ class Speech():
     def __init__(self, session):
         global _SPEECH
         self.session = session
-        self.speech = session.ALTextToSpeech
+        #self.speech = session.ALTextToSpeech
+        self.speech = session.ALAnimatedSpeech
         _SPEECH = self.speech
 
     @staticmethod

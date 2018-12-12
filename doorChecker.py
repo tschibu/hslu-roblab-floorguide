@@ -10,7 +10,7 @@ _DOOR_CHECKER = None
 _PEPPER_PATH = "/home/nao/recordings/cameras"
 _LOCAL_PATH = "/tmp"
 _FILENAME = "DoorChecker.jpg"
-_GOOGLE_API_CONFIG = "../res/google_vision_config.json"
+_GOOGLE_API_CONFIG = "res/google_vision_config.json"
 
 class DoorChecker():
     def __init__(self, session):
