@@ -54,9 +54,11 @@ class ControlFlow():
         return True
 
     def run(self):
-        Logger.debug("ControlFlow", "run", "Start FloorGuide behaviour.")
-        sub = self.robot.ALMemory.subscriber("PeoplePerception/JustArrived")
-        sub.signal.connect(self.on_people_detected)
+        sub_arrived = self.robot.ALMemory.subscriber("PeoplePerception/JustArrived")
+        sub_arrived.signal.connect(self.on_people_detected)
+        sub_tablet = self.robot.ALMemory.subscriber("FGButtonClicked")
+        sub_tablet.signal.connect(self.on_room_selected)
+        Logger.info("ControlFlow", "run", "Start FloorGuide behaviour.")
 
         while _RUN:
             pass
@@ -67,8 +69,6 @@ class ControlFlow():
         self.robot.ALRobotPosture.goToPosture(_INIT_POSTURE, 1)
         #show Room Selection and register call back
         TabletHandler.startApp(TabletHandler.getRoomSelectionApp())
-        sub = self.robot.ALMemory.subscriber("FGButtonClicked")
-        sub.signal.connect(self.on_room_selected)
 
     def on_room_selected(self, value):
         TabletHandler.startApp(TabletHandler.getMapApp())
