@@ -33,9 +33,6 @@ class PositionCalibrator():
                 break
             Logger.info("PositionCalibrator", "calibratePosition", "Calibrating position")
             self.movement.moveCalibrate(x, y)
-            landMark = self._getLandMark()
-            y = markShapeInfo[1]
-            size = markShapeInfo[3]
         return True
 
     def _getLandMark(self):

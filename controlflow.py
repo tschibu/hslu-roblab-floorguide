@@ -42,9 +42,11 @@ class ControlFlow():
         self.planner = Planner()
         self.movement = Movement(self.robot)
         self.poscalib = PositionCalibrator(self.robot)
+        self.currentpos = _START_COORDINATE
 
     def init(self):
         self.robot.ALRobotPosture.goToPosture(_INIT_POSTURE, 1)
+        self._write_actual_position(self.currentpos)
         #self.sensorhandler.write_operation_modes(1.0) #Laser and Obstacle Detection Off
         return True
 
@@ -71,33 +73,27 @@ class ControlFlow():
 
     def move_to_room(self, coordinate):
         end_coordinate = self.move_to_location(_START_COORDINATE, coordinate)
-
         #self.announce_destination()
         self.go_to_start_coordinate(end_coordinate)
 
     def move_to_location(self, start_coordinate, end_coordinate):
-        moveCmds = self.planner.getMoveCommands(start_coordinate, end_coordinate)
-        Logger.info("ControlFlow", "moveToLocation", "I have %d movements to do." % len(moveCmds))
+        coord_list = self.planner.get_coord_list(start_coordinate, end_coordinate)
+        Logger.info("ControlFlow", "moveToLocation", "I have %d waypoints." % len(coord_list))
 
-        for cmd in moveCmds:
-            next_coordinate = start_coordinate
-            next_coordinate.x = next_coordinate.x + cmd.x
-            next_coordinate.y = next_coordinate.y + cmd.y
-            next_coordinate.degrees = next_coordinate.degrees + cmd.degrees
-            if next_coordinate.degrees >= 360:
-                next_coordinate.degrees = 0
+        next_coordinate = start_coordinate
 
-            Logger.info("ControlFlow", "moveToLocation", "Execute move command with " + cmd.getText() + " units ")
-            if cmd.get_isCalibrationCmd():
+        for i in range(len(coord_list)):
+            for cmd in self.planner.get_move_cmd_from_coord(self.currentpos, coord_list[i]):
+                self._write_actual_position(self.currentpos)
+                
+                Logger.info("ControlFlow", "moveToLocation", "Execute move command with " + cmd.getText() + " units ")
                 if not self.movement.move(cmd):
                     Logger.err("ControlFlow", "moveToLocation", "Could not move to the given Position. Is something in my way?")
-                self.robot.ALRobotPosture.goToPosture(_INIT_POSTURE, 1)
-                self.poscalib.calibratePosition(cmd.getNaoMarkId())
-            else:
-                if not self.movement.move(cmd):
-                    Logger.err("ControlFlow", "moveToLocation", "Could not move to the given Position. Is something in my way?")
-                self._write_actual_position(next_coordinate)
+                if cmd.get_isCalibrationCmd():
+                    self.robot.ALRobotPosture.goToPosture(_INIT_POSTURE, 1)
+                    self.poscalib.calibratePosition(cmd.getNaoMarkId())
 
+        self._write_actual_position(self.currentpos)
         return end_coordinate #TODO return real end position!
 
     def announce_destination(self, door_name):

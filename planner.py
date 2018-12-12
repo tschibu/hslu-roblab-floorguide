@@ -3,11 +3,13 @@ from astar.astar import Astar
 from roblib.map import Map
 import numpy as np
 from roblib.datastructures import MoveCommand
+from roblib.datastructures import Coordinate
 from filetransfer import Filetransfer
 
 # Path JSON
 _PATH_LOCAL = "./path.json"
 _PATH_REMOTE = "/home/nao/.local/share/PackageManager/apps/FloorGuide_Map/html/json/path.json"
+
 
 class Planner():
     def __init__(self):
@@ -18,19 +20,21 @@ class Planner():
             if (n.is_passable()):
                 self.pepper_matrix[n.x][n.y] = 0
 
-    def getMoveCommands(self, current_pos, destination_pos):
+    def get_coord_list(self, current_pos, destination_pos):
         a = Astar()
         start = (current_pos.getX(), current_pos.getY())
         end = (destination_pos.getX(), destination_pos.getY())
         path = a.astar(self.pepper_matrix, start, end)
         self._write_json_path(path)
         simplified_path = self._simplifyPath(path)
-        mcs = self._getMoveList(current_pos, destination_pos, simplified_path)
-
-        return mcs
+        coord_list = []
+        for p in simplified_path:
+            coord_list.append(Coordinate(p[0], p[1]))
+        coord_list[len(coord_list) - 1].degrees = destination_pos.degrees
+        return coord_list
 
     def _simplifyPath(self, path):
-        path_comp = [path[0]]
+        path_comp = []
         start_node = path[0]
         prev_node = path[0]
         for node in path:
@@ -41,49 +45,49 @@ class Planner():
         path_comp.append(prev_node)
         return path_comp
 
-    def _getMoveList(self, currentPos, destinationPos, path):
-        prev_waypoint = path[0]
-        current_direction = currentPos.getDegrees()
-        moveList = []
-        for waypoint in path[1:]:
-            direction = (waypoint[0] - prev_waypoint[0], waypoint[1] - prev_waypoint[1])
-            # turn command
-            new_direction = current_direction
-            if direction[0] > 0:
-                # go right
-                new_direction = 90
-            if direction[0] < 0:
-                # go left
-                new_direction = 270
-            if direction[1] < 0:
-                # go down
-                new_direction = 0
-            if direction[1] > 0:
-                # go up
-                new_direction = 180
+    def get_move_cmd_from_coord(self, currentpos, targetpos):
+        move_list = []
+        current_direction = currentpos.getDegrees()
+        direction = (targetpos.x - currentpos.x, targetpos.y - currentpos.y)
+        new_direction = current_direction
+        if direction[0] > 0:
+            # go right
+            new_direction = 90
+        if direction[0] < 0:
+            # go left
+            new_direction = 270
+        if direction[1] < 0:
+            # go down
+            new_direction = 0
+        if direction[1] > 0:
+            # go up
+            new_direction = 180
 
-            distance = abs(direction[0] + direction[1])
-            turn = self._getTurnDegrees(current_direction, new_direction)
-            if turn != 0:
-                moveList.append(MoveCommand(0, 0, turn))
-            if distance != 0:
-                moveList.append(MoveCommand(distance, 0, 0))
+        distance = abs(direction[0] + direction[1])
+        turn = self._getTurnDegrees(current_direction, new_direction)
 
-            current_direction = new_direction
+        if turn != 0:
+            move_list.append(MoveCommand(0, 0, turn))
+        if distance != 0:
+            move_list.append(MoveCommand(distance, 0, 0))
 
-            node = self.map.nodes['%d:%d' % (waypoint[0], waypoint[1])]
-            if node.get_naomark() != None:
-                naoMarkDegree = node.get_naomark().get_degree()
-                degrees = self._getTurnDegrees(current_direction, naoMarkDegree)
-                moveList.append(MoveCommand(0, 0, degrees, True, node.get_naomark().get_id()))
-                if degrees != 0:
-                    moveList.append(MoveCommand(0, 0, -degrees))
+        node = self.map.nodes['%d:%d' % (targetpos.x, targetpos.y)]
+        if node.get_naomark() != None:
+            naoMarkDegree = node.get_naomark().get_degree()
+            degrees = self._getTurnDegrees(new_direction, naoMarkDegree)
+            move_list.append(MoveCommand(0, 0, degrees, True, node.get_naomark().get_id()))
+            if degrees != 0:
+                move_list.append(MoveCommand(0, 0, -degrees))
 
-            prev_waypoint = waypoint
+        if targetpos.getDegrees() != None:
+            move_list.append(MoveCommand(0, 0, self._getTurnDegrees(new_direction, targetpos.getDegrees())))
 
-        turn = destinationPos.getDegrees() - current_direction
-        moveList.append(MoveCommand(0, 0, turn))
-        return moveList
+
+
+        currentpos.x = targetpos.x
+        currentpos.y = targetpos.y
+        currentpos.degrees = new_direction
+        return move_list
 
     def _getTurnDegrees(self, currentDirection, newDirection):
         turn = newDirection - currentDirection

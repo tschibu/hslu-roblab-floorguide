@@ -1,5 +1,5 @@
 class MoveCommand():
-    def __init__(self, x, y, degrees, isCalibrationCmd=False, naoMarkId=0):
+    def __init__(self, x, y, degrees=None, isCalibrationCmd=False, naoMarkId=0):
         self.x = x
         self.y = y
         self.degrees = degrees

@@ -11,49 +11,53 @@ from positionCalibrator import PositionCalibrator
 from tracer import Tracer
 
 
-roboterName = "Amber"
+roboterName = "Porter"
 initPosition = "StandZero" # StandInit, StandZero, Crouch
-current_pos = Coordinate(8, 2, 270)
+current_pos = Coordinate(3, 2, 90)
 destination_pos = Coordinate(4, 18, 180)
 
 #Main entry point for the Planner & Movement Proof-of-Concept
 def _main():
     # init Robot
     config = PepperConfiguration(roboterName)
-    if(not config.isAvailable()):
-        Logger.err("Main", "checkAvailability", "name: " + config.Name + ", ip: " + config.Ip + " not reachable!")
-        sys.exit(1)
+    #if(not config.isAvailable()):
+    #    Logger.err("Main", "checkAvailability", "name: " + config.Name + ", ip: " + config.Ip + " not reachable!")
+    #    sys.exit(1)
 
     robot = Robot(config)
 
-    lifeService = robot.session.service("ALAutonomousLife")
-    lifeService.setAutonomousAbilityEnabled("AutonomousBlinking", False)
-    lifeService.setAutonomousAbilityEnabled("BackgroundMovement", False)
-    lifeService.setAutonomousAbilityEnabled("BasicAwareness", False)
-    lifeService.setAutonomousAbilityEnabled("ListeningMovement", False)
-    lifeService.setAutonomousAbilityEnabled("SpeakingMovement", False)
+    #lifeService = robot.session.service("ALAutonomousLife")
+    #lifeService.setAutonomousAbilityEnabled("AutonomousBlinking", False)
+    #lifeService.setAutonomousAbilityEnabled("BackgroundMovement", False)
+    #lifeService.setAutonomousAbilityEnabled("BasicAwareness", False)
+    #lifeService.setAutonomousAbilityEnabled("ListeningMovement", False)
+    #lifeService.setAutonomousAbilityEnabled("SpeakingMovement", False)
 
-    robot.ALRobotPosture.goToPosture(initPosition, 1)
-    time.sleep(3)
+    #robot.ALRobotPosture.goToPosture(initPosition, 1)
+    #time.sleep(3)
 
     # create Components
     Speech(robot)
     planner = Planner()
     movement = Movement(robot)
     poscalibrator = PositionCalibrator(robot)
-    moveCmds = planner.getMoveCommands(current_pos, destination_pos)
-
+    coord_list = planner.get_coord_list(current_pos, destination_pos)
+    move_cmds = []
     # info to the audience
-    Logger.info("mainPlanMove2.py", "_main", "I have %d movements to do." % len(moveCmds))
 
-    for cmd in moveCmds:
-        Logger.info("mainPlanMove2.py", "_main", "Execute move command with " + cmd.getText() + " units ")
-        print("MoveCommand({}, {}, {})".format(cmd.getX(), cmd.getY(), cmd.getDegrees()))
-        if cmd.get_isCalibrationCmd() == True:
-            movement.move(cmd)
-            poscalibrator.calibratePosition(cmd.getNaoMarkId())
-        else:
-            movement.move(cmd)
+    for i in range(len(coord_list)):
+        move_cmds.append(planner.get_move_cmd_from_coord(current_pos, coord_list[i]))
+
+
+    Logger.info("mainPlanMove2.py", "_main", "I have %d movements to do." % len(coord_list))
+    #for cmd in moveCmds:
+    #    Logger.info("mainPlanMove2.py", "_main", "Execute move command with " + cmd.getText() + " units ")
+    #    print("MoveCommand({}, {}, {})".format(cmd.getX(), cmd.getY(), cmd.getDegrees()))
+    #    if cmd.get_isCalibrationCmd() == True:
+    #        movement.move(cmd)
+    #        poscalibrator.calibratePosition(cmd.getNaoMarkId())
+    #    else:
+    #        movement.move(cmd)
 
 if __name__ == "__main__":
     _main()
