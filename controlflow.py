@@ -16,11 +16,11 @@ from tabletHandler import TabletHandler
 from filetransfer import Filetransfer
 
 # Robot to use
-_ROBOT_NAME = "Porter"
+_ROBOT_NAME = "Amber"
 # Default Posture
 _INIT_POSTURE = "StandInit" # StandInit, StandZero, Crouch
 # Start Coordiante
-_START_COORDINATE = Coordinate(1, 4, 360)
+_START_COORDINATE = Coordinate(1, 4, 0)
 # Global flag which indicates that App should run
 _RUN = True
 # Position JSON
@@ -85,7 +85,7 @@ class ControlFlow():
         for i in range(len(coord_list)):
             for cmd in self.planner.get_move_cmd_from_coord(self.currentpos, coord_list[i]):
                 self._write_actual_position(self.currentpos)
-                
+
                 Logger.info("ControlFlow", "moveToLocation", "Execute move command with " + cmd.getText() + " units ")
                 if not self.movement.move(cmd):
                     Logger.err("ControlFlow", "moveToLocation", "Could not move to the given Position. Is something in my way?")

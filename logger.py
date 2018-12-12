@@ -2,7 +2,7 @@ import os
 import datetime
 from speech import Speech
 
-_DEBUG = True
+_DEBUG = False
 _SPEECH = True
 _FILESTREAM = open("team10_room_guide.log", "a")
 _LINEENDING = os.linesep
@@ -13,7 +13,6 @@ def writeLogMsg(t, className, topic, message):
     print(txt)
     _FILESTREAM.write(txt+_LINEENDING)
     if _SPEECH:
-        Speech.sayText(t)
         Speech.sayText(message)
 
 class Logger():

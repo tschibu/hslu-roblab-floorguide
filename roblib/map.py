@@ -54,7 +54,7 @@ class Map:
                 node = Node(n["x"], n["y"], passable, r, naomark)
                 self.nodes[str(n["x"]) + ":" + str(n["y"])] = node
 
-            Logger.info("map.py", "load_json", "successfully load map from web app file.")
+            Logger.debug("map.py", "load_json", "successfully load map from web app file.")
             self.neighbor_alg()
 
 
@@ -62,7 +62,7 @@ class Map:
     Algorithm to create the relationship / neighbor between the nodes.
     """
     def neighbor_alg(self):
-        Logger.info("map.py", "neighbor_alg", "Start creating relationship between the nodes.")
+        Logger.debug("map.py", "neighbor_alg", "Start creating relationship between the nodes.")
         for n in self.nodes.itervalues():
             right_node = str((n.x + 1)) + ":" + str(n.y)
             left_node = str((n.x - 1)) + ":" + str(n.y)
@@ -81,4 +81,4 @@ class Map:
             if(self.nodes.get(up_node) is not None):
                 n.set_up(self.nodes[up_node])
 
-        Logger.info("map.py", "neighbor_alg", "Map with relationship between the nodes calculated.")
+        Logger.debug("map.py", "neighbor_alg", "Map with relationship between the nodes calculated.")
