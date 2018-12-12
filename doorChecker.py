@@ -10,6 +10,7 @@ _DOOR_CHECKER = None
 _PEPPER_PATH = "/home/nao/recordings/cameras"
 _LOCAL_PATH = "/tmp"
 _FILENAME = "DoorChecker.jpg"
+_GOOGLE_API_CONFIG = "../res/google_vision_config.json"
 
 class DoorChecker():
     def __init__(self, session):
@@ -36,7 +37,7 @@ class DoorChecker():
             # Download File from Pepper to local system
             Filetransfer.transfer_file_from_pepper_to_local(_PEPPER_PATH + "/" + _FILENAME, "/tmp/" + _FILENAME)
 
-            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "../res/Pepper-4fd1ecb47687.json"
+            os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = _GOOGLE_API_CONFIG
 
             # Google Vision API
             client = vision.ImageAnnotatorClient()
