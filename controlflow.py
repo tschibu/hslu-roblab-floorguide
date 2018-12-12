@@ -30,9 +30,9 @@ _POSITION_REMOTE = "/home/nao/.local/share/PackageManager/apps/FloorGuide_Map/ht
 class ControlFlow():
     def __init__(self):
         self.config = PepperConfiguration(_ROBOT_NAME)
-        #if(not self.config.isAvailable()):
-        #    Logger.err("ControlFlow", "checkAvailability", "name: " + self.config.Name + ", ip: " + self.config.Ip + " not reachable!")
-        #    sys.exit(1) #Abort since robot is not available...
+        if(not self.config.isAvailable()):
+            Logger.err("ControlFlow", "checkAvailability", "name: " + self.config.Name + ", ip: " + self.config.Ip + " not reachable!")
+            sys.exit(1) #Abort since robot is not available...
         self.robot = Robot(self.config)
         Speech(self.robot) #Initialize Speech (static class, no reference needed)
         DoorChecker(self.robot) #Initialize DoorChecker (static class, no reference needed)
@@ -54,7 +54,7 @@ class ControlFlow():
         return True
 
     def run(self):
-         #show Room Selection and register call back
+        #show Room Selection and register call back
         TabletHandler.startApp(TabletHandler.getRoomSelectionApp())
         sub = self.robot.ALMemory.subscriber("FGButtonClicked")
         sub.signal.connect(self.on_room_selected)
