@@ -74,7 +74,8 @@ class ControlFlow():
     def move_to_room(self, coordinate):
         end_coordinate = self.move_to_location(_START_COORDINATE, coordinate)
         #self.announce_destination()
-        self.go_to_start_coordinate(end_coordinate)
+        if end_coordinate != None:
+            self.go_to_start_coordinate(end_coordinate)
 
     def move_to_location(self, start_coordinate, end_coordinate):
         coord_list = self.planner.get_coord_list(start_coordinate, end_coordinate)
@@ -89,6 +90,7 @@ class ControlFlow():
                 Logger.info("ControlFlow", "moveToLocation", "Execute move command with " + cmd.getText() + " units ")
                 if not self.movement.move(cmd):
                     Logger.err("ControlFlow", "moveToLocation", "Could not move to the given Position. Is something in my way?")
+                    return None
                 if cmd.get_isCalibrationCmd():
                     self.robot.ALRobotPosture.goToPosture(_INIT_POSTURE, 1)
                     self.poscalib.calibratePosition(cmd.getNaoMarkId())
