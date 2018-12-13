@@ -44,4 +44,4 @@ Afterwards the 'google_vision_config.json' within the 'res' directory has to be 
     ```
 
 ## Last Updated
-13. December 2018
+December 13th 2018
