@@ -2,81 +2,46 @@ _Cognitive Robotics Lab HS2018 - Team 10_
 
 # FloorGuide
 
-## Frameworks
-### pynaoqi_mate
-Der Code basiert auf das pynaoqi_mate-Framework
-https://github.com/uts-magic-lab/pynaoqi_mate
-und wurde auf die Pepper Roboer `amber` und `porter` der HSLU optimiert.
+## Team
+* Remo Schwarzentruber
+* Michael Nebroj
+* Serge Hauri
+* Steve Ineichen
 
-### Google Vision API
-#### Install package for Google Vision API
+## Usage
+### Prerequisites
+* Choreograph installed ([http://doc.aldebaran.com/2-4/dev/community_software.html](http://doc.aldebaran.com/2-4/dev/community_software.html))
+    * We expect that you know how to install an existing behavior onto a robot
+* Working NAOqi Python SDK ([http://doc.aldebaran.com/2-4/dev/python/intro_python.html](http://doc.aldebaran.com/2-4/dev/python/intro_python.html))
+    * **Note:** for MacOS follow [these instructions](https://github.com/tschibu/pepper-nao-python-installation-mac)
+* All Python packages installed
+    * Example with '[pip](https://pypi.org/project/pip/)' Pacakge Manager
+        ```cmd
+        pip install -r requirements.txt
+        ```
+
+### Clone this repository
+```cmd
+git clone https://gitlab.enterpriselab.ch/RobLab/RobLab-18HS/roblab-18hs-g10
 ```
-pip install --upgrade google-cloud-vision
-pip install --upgrade pillow
-```
-Check if you have set de API-Access Key:
-```
-export GOOGLE_APPLICATION_CREDENTIALS="[PATH]"
-```
-The key is in the `res`-folder.
 
-## Aufbau Umgebung
-Um die Applikation Floor Guide zu verwenden muss zuerst die Umgebung vorbereitet sein.
+### Register for Cloud Vision API
+Register for [Cloud Vision API](https://cloud.google.com/docs/authentication/api-keys?hl=de&visit_id=636803038076480516-667118898&rd=1)
 
-### Application Server
-Wird mit Python entwickelt.
+Afterwards the 'google_vision_config.json' within the 'res' directory has to be filled with the correct data (private key, project name, email, etc.)
 
-### Client
-Um den Client zu entwickeln empfiehlt sich das Visual Studio Code.
-```
-xxxx
-```
-### Pepper Behaviour
-Wird mit Choreograph entwickelt.
+### Install Webapps with Choreograph
+* Load & Install 'webapp_map/choreograph/map.pml'
+* Load & Install 'webapp_room_selection/choreograph/room_selection.pml'
 
-## Starten
-### Application Server
-Python Projekt starten mit dem Kommando
-```
-python xxxxx.py
-```
-### Client
-xxxx
+### Start ControlFlow
+* Navigate the the root folder of roblab-18hs-g10
+* Check in [controlflow.py](controlflow.py) if the correct roboter is selected
+    * You may have to adjust [configuration.py](configuration.py) according to your robot configuration
+* Execute
+    ```cmd
+    python controlflow.py
+    ```
 
-### Pepper Behaviour
-xxxxx
-
-### Important Infos
-#### JavaScript libs on target
-cd /opt/aldebaran/var/www/libs/
-
-#### Webapp location on Robot
-cd ~/.local/share/PackageManager/apps/roomselection_web/html
-
-#### Markers
-http://doc.aldebaran.com/2-5/naoqi/vision/allandmarkdetection.html#allandmarkdetection
-
-### Open Todos
-- [x] Prio01 : Sensoren Limits heruntersetzen
-- [x] Prio02 : Was passiwert wenn der Kopf schräg ist und Pepper sich nicht Kalibrieren kann?
-- [x] Prio03 : Tür erkennen aus Bild ausschneiden
-- [x] Prio04 : Was passiert wenn wir ein Hindernis haben auf dem Weg? / Ausgangsposition
-- [x] Prio05 : Was passiert wenn jemand vor Pepper steht nachdem er den Raum ausgewählt hat? (Lösung: Kopfsensor betätigen, wenn man dahinter steht.)
-- [x] Prio06 : Statemachine / Controlflow
-- [x] Prio08 : Tracer Auswertung (verworfen)
-- [x] Prio09 : Path Updaten
-- [x] Prio10 : Position Updaten
-
-
-## Naming Conventions
-Type            | Conventions
---------------- | ------------------------------
-Packages        | `lower_case_with_underscores`
-Modules         | `lower_case_with_underscores`
-Classes         | `CapitalizedWords`
-Exceptions      | `CapitalizedWords`
-Functions       | `lower_case_with_underscores()`
-Constants       | `_UPPERCASE`
-Local Variables | `lower_case_with_underscores`
-
-
+## Last Updated
+13. December 2018
