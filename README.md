@@ -16,7 +16,7 @@ _Cognitive Robotics Lab HS2018 - Team 10_
     * **Note:** for MacOS follow [these instructions](https://github.com/tschibu/pepper-nao-python-installation-mac)
 * All Python packages installed
     * Example with '[pip](https://pypi.org/project/pip/)' Pacakge Manager
-        ```cmd
+        ```
         pip install -r requirements.txt
         ```
 
@@ -39,7 +39,7 @@ Afterwards the 'google_vision_config.json' within the 'res' directory has to be 
 * Check in [controlflow.py](controlflow.py) if the correct roboter is selected
     * You may have to adjust [configuration.py](configuration.py) according to your robot configuration
 * Execute
-    ```cmd
+    ```
     python controlflow.py
     ```
 
