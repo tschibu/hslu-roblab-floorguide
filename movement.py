@@ -38,7 +38,7 @@ class Movement():
 
     def log(self, value, x, y, degrees):
         if value:
-            Logger.info("Movement", "navigateTo", "successful move with x: " + str(x) + " y: " + str(y) + " degrees: " + str(degrees))
+            Logger.info("Movement", "navigateTo", "Movement successful")
         else:
             Logger.err("Movement", "navigateTo", "failed move with x: " + str(x) + " y: " + str(y) + " degrees: " + str(degrees))
         return value

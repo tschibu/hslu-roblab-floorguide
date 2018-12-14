@@ -27,7 +27,7 @@ class PositionCalibrator():
             y = markShapeInfo[1]
             size = markShapeInfo[3]
             # size wanted: 0.131
-            x = (0.131 - size) * 15
+            x = (0.131 - size) * 12
             if abs(y) < 0.1 and abs(x) < 0.1:
                 Logger.info("PositionCalibrator", "calibratePosition", "Calibration complete")
                 break

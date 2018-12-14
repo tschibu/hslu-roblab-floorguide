@@ -37,4 +37,4 @@ class SensorHandler():
         self.dcm.set(["Device/SubDeviceList/Platform/LaserSensor/Front/Reg/OperationMode/Actuator/Value", "Merge", [[0.0, t]]])
         self.dcm.set(["Device/SubDeviceList/Platform/LaserSensor/Right/Reg/OperationMode/Actuator/Value", "Merge", [[0.0, t]]])
         self.dcm.set(["Device/SubDeviceList/Platform/LaserSensor/Left/Reg/OperationMode/Actuator/Value", "Merge", [[0.0, t]]])
-        self.motion.setExternalCollisionProtectionEnabled("All", False)
+        self.motion.setExternalCollisionProtectionEnabled("All", True)
